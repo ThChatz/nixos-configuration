@@ -1,0 +1,110 @@
+* TODO nix-os [1/9]
+** DONE Move to flakes
+** TODO Set up services
+*** TODO syncthing
+
+*** TODO ssh w/ pgp key for backups
+** TODO Use home-manager
+** TODO cron job for snapshotting home directory
+*** TODO Alternative mounting scheme for home-manager
+if using home-manager maybe snapshotting specific directories is bettter
+persistent-home directory and simlink subdirs from there?
+
+distinct '@<username>-persistent' subvolume,
+mount at /home/<username>/.persistent, symlink
+Documents, Pictures, Music, Public, Videos
+(maybe downloads as well but maybe not to force organize ;))
+snapshot persistent home instead
+  https://elis.nu/blog/2020/06/nixos-tmpfs-as-home/
+
+  also gpg and ssh keys. should not in backup, +maybe yet another subvolume?+ put in /nix/persist/<username>
+
+
+  TL;DR: high investment but HUGE in ease of backups
+** TODO use deploy-rs for managing different systems + home-manager
+** TODO CI/CD
+** TODO remote backup system [0/2]
+*** TODO git-annex to cloud for specific files
+git-annex could also help to reduce snapshot size if i ever store
+snapshots on object storage
+*** TODO btrfs-send 
+
+** TODO global secrets
++ backup buckets
++ loophole tokens(?)
+** TODO erase root on reboot
+https://grahamc.com/blog/erase-your-darlings/
+something like this /could/ work for /home with home-manager
+https://elis.nu/blog/2020/06/nixos-tmpfs-as-home/
+* home-manager [1/8]
+** TODO look more into secret management [0/2]
+*** TODO kaggle token
+syncthing(?)
+*** TODO email accounts (?)
+probably should be in password-store
+** DONE +CI/CD+ (will be included with system config)
+** TODO change window managers
+Using a keybind daemon for application launching could make transitions easier
+X is dying but xdotool >>> ydotool (due to ewmh)
+*** Options
++ Xmonad
++ dwm
++ keep i3
+  + solve issues with multiple screens
+  + implement features with i3-msg
+  + big pro: wayland support with sway
+  + can generate config with nix or other preprocessor
++ qtile
++ river
+
+** TODO switch to eww for ricing purposes
+** Starship term prompt(?)
+** TODO maybe move some of emacs config to nix(?)
+  + prebuilt packages
+** TODO move user packages here (emacs config dependencies, etc.)
+*** prettier
+*** ccls
+*** prolog installation (for ediprolog(?))
+** TODO Productivity Configuration
+*** TODO Ace-jump like functionality for windows / monitors
+need to decide on wm first (or wm agnostic?)
+*** TODO wm respects emacs windows or emacs frame-only mode
+**** wm respects emacs windows
+can use `emacsclient -e (windmove <direction>)` but also need a way to override this and force a window change focus
+**** frame-only mode
+default layout is dogwater (fixable from wm); also having some temporary frames as floating could be worth looking into
+*** TODO better configuration for work stuff in emacs
+**** js/ react
+***** LSP
+***** tree-sitter(?)
+***** macros
+**** php
+***** God help me
+**** SQL
+***** completion
+***** superset integration
+qutebrowser seems good enough for this
+*** TODO qutebrowser 
+figure out kb-only inspect element
+integrate pass
+set better user agent
+*** TODO pomodoro timer
+**** Keybinds
++ pomodoro-step
+  start focus / break timer
++ pomodoro-expand
+  add 5 minutes to current timer
++ pomodoro-skip
+  skips to the end of current timer
+**** Display
+on bar: remaining minutes (or just color green->red red means less time)
+command to show accurate time
+** Useful keybinds
++ pass ui
++ select monitor
+  + move workspace to monitor
+  + focus monitor
+  + etc.
++ agenda dashboard (org google calendar etc.)
+
+
