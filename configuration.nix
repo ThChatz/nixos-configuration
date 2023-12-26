@@ -107,7 +107,8 @@
      feh
      passff-host
      gnupg
-     pinentry-gtk2
+     pinentry-gnome
+     gcr
      mysql-workbench
      texlive.combined.scheme-full
      libreoffice
@@ -171,10 +172,12 @@
   programs.gnupg.agent = {
     enable = true;
     enableSSHSupport = true;
-    pinentryFlavor = "gtk2";
+    pinentryFlavor = "gnome3";
   };
 
   # List services that you want to enable:
+
+  services.pcscd.enable = true;
 
   # Enable the OpenSSH daemon.
   # services.openssh.enable = true;
