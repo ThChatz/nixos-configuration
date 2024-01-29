@@ -1,10 +1,12 @@
-* TODO nix-os [1/9]
+* TODO nix-os [1/10]
 ** DONE Move to flakes
-** TODO Set up services
-*** TODO syncthing
-
-*** TODO ssh w/ pgp key for backups
+** TODO use deploy-rs for managing different systems + home-manager
+** TODO erase root on reboot
+https://grahamc.com/blog/erase-your-darlings/
+something like this /could/ work for /home with home-manager
+https://elis.nu/blog/2020/06/nixos-tmpfs-as-home/
 ** TODO Use home-manager
+** TODO tmpfs home
 ** TODO cron job for snapshotting home directory
 *** TODO Alternative mounting scheme for home-manager
 if using home-manager maybe snapshotting specific directories is bettter
@@ -21,7 +23,6 @@ snapshot persistent home instead
 
 
   TL;DR: high investment but HUGE in ease of backups
-** TODO use deploy-rs for managing different systems + home-manager
 ** TODO CI/CD
 ** TODO remote backup system [0/2]
 *** TODO git-annex to cloud for specific files
@@ -32,30 +33,29 @@ snapshots on object storage
 ** TODO global secrets
 + backup buckets
 + loophole tokens(?)
-** TODO erase root on reboot
-https://grahamc.com/blog/erase-your-darlings/
-something like this /could/ work for /home with home-manager
-https://elis.nu/blog/2020/06/nixos-tmpfs-as-home/
-* home-manager [1/8]
-** TODO look more into secret management [0/2]
+** TODO Set up services
+*** TODO ssh w/ pgp key for backups
+* home-manager [2/8]
+** TODO syncthing
+** TODO look more into secret management [1/2]
 *** TODO kaggle token
 syncthing(?)
-*** TODO email accounts (?)
+*** DONE email accounts (?)
 probably should be in password-store
 ** DONE +CI/CD+ (will be included with system config)
-** TODO change window managers
+** DONE change window managers -- keeping i3 for now
 Using a keybind daemon for application launching could make transitions easier
 X is dying but xdotool >>> ydotool (due to ewmh)
 *** Options
-+ Xmonad
-+ dwm
+++ Xmonad+
+++ dwm+
 + keep i3
   + solve issues with multiple screens
   + implement features with i3-msg
   + big pro: wayland support with sway
   + can generate config with nix or other preprocessor
 + qtile
-+ river
+++ river+
 
 ** TODO switch to eww for ricing purposes
 ** Starship term prompt(?)
@@ -106,5 +106,5 @@ command to show accurate time
   + focus monitor
   + etc.
 + agenda dashboard (org google calendar etc.)
-
++ rebuild nix config (+ for home manager)
 

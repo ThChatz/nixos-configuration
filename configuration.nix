@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 {
   nix = {
@@ -18,9 +18,32 @@
     ];
 
   # Bootloader.
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
 
+  boot = {
+    consoleLogLevel = 0;
+    initrd.verbose = false;
+    kernelParams = [
+      "boot.shell_on_fail"
+      "i915.fastboot=1"
+      "loglevel=3"
+      "rd.systemd.show_status=false"
+      "rd.udev.log_level=3"
+      "udev.log_priority=3"
+    ];
+
+    loader = {
+      timeout = lib.mkDefault 5;
+      efi.canTouchEfiVariables = true;
+      systemd-boot = {
+        enable = true;
+        editor = false;
+        configurationLimit = 100;
+      };
+    };
+  };
+
+
+  
   networking.hostName = "tchz-thinkpad"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
@@ -57,7 +80,7 @@
   };
 
   # Configure console keymap
-  console.keyMap = "gr";
+  console.keyMap = "us";
 
   # fonts
   fonts.packages = with pkgs; [
@@ -122,6 +145,7 @@
      yarn
      wineWowPackages.stableFull
      lutris
+     ssh-askpass-fullscreen
   ];
 
   environment.pathsToLink = [ "/libexec" ];
@@ -188,6 +212,15 @@
   services.devmon.enable = true;
   services.blueman.enable = true;
   services.passSecretService.enable = true;
+
+  services.openssh = {
+    enable = true;
+    # require public key authentication for better security
+    settings.PasswordAuthentication = false;
+    settings.KbdInteractiveAuthentication = false;
+    #settings.PermitRootLogin = "yes";
+  };
+
   virtualisation.docker.rootless = {
     enable = true;
     setSocketVariable = true;
