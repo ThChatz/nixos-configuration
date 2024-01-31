@@ -146,6 +146,7 @@
      wineWowPackages.stableFull
      lutris
      ssh-askpass-fullscreen
+     graphviz
   ];
 
   environment.pathsToLink = [ "/libexec" ];
