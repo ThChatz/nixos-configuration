@@ -72,13 +72,6 @@
     LC_TIME = "el_GR.UTF-8";
   };
 
-  # Configure keymap in X11
-  services.xserver = {
-    layout = "us, gr";
-    xkbVariant = "";
-    xkbOptions = "shifts_toggle";
-  };
-
   # Configure console keymap
   console.keyMap = "us";
 
@@ -147,6 +140,16 @@
      lutris
      ssh-askpass-fullscreen
      graphviz
+     postman
+     pulsemixer
+     php
+     acpi
+     scrot
+     chromium
+     google-cloud-sdk
+     hplipWithPlugin
+     eww
+     kubectl
   ];
 
   environment.pathsToLink = [ "/libexec" ];
@@ -166,25 +169,31 @@
   };
 
   services.xserver = {
-  		   enable = true;
+  	enable = true;
 
-		   desktopManager = {
-		   		  xterm.enable=false;
-		   };
+    xkb = {
+      layout = "us, gr";
+      variant = "";
+      options = "shifts_toggle";
+    };
 
-		   displayManager = {
-		   		  defaultSession = "none+i3";
-				  lightdm.enable = true;
-		   };
+		desktopManager = {
+		  xterm.enable=false;
+		};
 
-		   windowManager.i3 = {
-		   		    enable = true;
-				    extraPackages = with pkgs; [
-				    		  rofi
-						  polybarFull
-				    ];
-				    package = pkgs.i3-gaps;
-		   };
+		displayManager = {
+		  defaultSession = "none+i3";
+			lightdm.enable = true;
+		};
+
+		windowManager.i3 = {
+		  enable = true;
+			extraPackages = with pkgs; [
+				rofi
+				polybarFull
+			];
+			package = pkgs.i3-gaps;
+		};
   };
 
   
