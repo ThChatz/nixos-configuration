@@ -123,8 +123,9 @@
      feh
      passff-host
      gnupg
-     pinentry-gnome
      gcr
+     pinentry-all
+     pinentry-rofi
      mysql-workbench
      texlive.combined.scheme-full
      libreoffice
@@ -146,10 +147,12 @@
      acpi
      scrot
      chromium
-     google-cloud-sdk
+     (google-cloud-sdk.withExtraComponents ([ google-cloud-sdk.components.kubectl ]))
      hplipWithPlugin
      eww
      kubectl
+     kubernetes-helm
+     pavucontrol
   ];
 
   environment.pathsToLink = [ "/libexec" ];
@@ -163,9 +166,16 @@
       settings.General.Enable = "Source,Sink,Media,Socket";
     };
     pulseaudio = {
-      enable = true;
+      enable = false;
       package = pkgs.pulseaudioFull;
     };
+  };
+
+  services.pipewire = {
+    enable = true;
+    alsa.enable = true;
+    alsa.support32Bit = true;
+    pulse.enable = true;
   };
 
   services.xserver = {
@@ -206,7 +216,11 @@
   programs.gnupg.agent = {
     enable = true;
     enableSSHSupport = true;
-    pinentryFlavor = "gnome3";
+    pinentryPackage = pkgs.pinentry-gtk2;
+    settings = {
+      enable-ssh-support = " ";
+      no-allow-external-cache = " ";
+    };
   };
 
   # List services that you want to enable:
