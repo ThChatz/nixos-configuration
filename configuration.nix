@@ -53,6 +53,9 @@
 
   # Enable networking
   networking.networkmanager.enable = true;
+  networking.networkmanager.plugins = [
+    pkgs.networkmanager-openvpn
+  ];
 
   # Set your time zone.
   time.timeZone = "Europe/Athens";
@@ -211,17 +214,20 @@
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
 
-  programs.git.enable = true;
-  # programs.mtr.enable = true;
-  programs.gnupg.agent = {
-    enable = true;
-    enableSSHSupport = true;
-    pinentryPackage = pkgs.pinentry-gtk2;
-    settings = {
-      enable-ssh-support = " ";
-      no-allow-external-cache = " ";
+  programs = {
+    git.enable = true; 
+    gnupg.agent = {
+      enable = true;
+      enableSSHSupport = true;
+      pinentryPackage = pkgs.pinentry-gtk2;
+      settings = {
+        enable-ssh-support = " ";
+        no-allow-external-cache = " ";
+      };
     };
+    openvpn3.enable = true;
   };
+  # programs.mtr.enable = true;
 
   # List services that you want to enable:
 

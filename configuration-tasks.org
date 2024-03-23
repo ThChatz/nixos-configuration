@@ -1,14 +1,30 @@
-* TODO nix-os [1/10]
+* TODO nix-os [1/9]
 ** DONE Move to flakes
-** TODO use deploy-rs for managing different systems + home-manager
 ** TODO erase root on reboot
 https://grahamc.com/blog/erase-your-darlings/
-something like this /could/ work for /home with home-manager
-https://elis.nu/blog/2020/06/nixos-tmpfs-as-home/
+*** TODO @nix subvolume + move /nix/* to it
+*** DONE make sure /home is safe
+*** TODO impermanence
+save wifi/bluetooth
+logs
+
+** TODO cron job for snapshotting home directory
+** TODO use deploy-rs for managing different systems + home-manager
+** TODO CI/CD
+** TODO remote backup system [0/2]
+*** TODO git-annex to cloud for specific files
+git-annex could also help to reduce snapshot size if i ever store
+snapshots on object storage
+*** TODO btrfs-send 
+
+** TODO global secrets
++ backup buckets
++ loophole tokens(?)
+** TODO Set up services
+*** TODO ssh w/ pgp key for backups
+* home-manager [2/8]
 ** TODO Use home-manager
 ** TODO tmpfs home
-** TODO cron job for snapshotting home directory
-*** TODO Alternative mounting scheme for home-manager
 if using home-manager maybe snapshotting specific directories is bettter
 persistent-home directory and simlink subdirs from there?
 
@@ -23,19 +39,6 @@ snapshot persistent home instead
 
 
   TL;DR: high investment but HUGE in ease of backups
-** TODO CI/CD
-** TODO remote backup system [0/2]
-*** TODO git-annex to cloud for specific files
-git-annex could also help to reduce snapshot size if i ever store
-snapshots on object storage
-*** TODO btrfs-send 
-
-** TODO global secrets
-+ backup buckets
-+ loophole tokens(?)
-** TODO Set up services
-*** TODO ssh w/ pgp key for backups
-* home-manager [2/8]
 ** TODO syncthing
 ** TODO look more into secret management [1/2]
 *** TODO kaggle token
@@ -107,4 +110,6 @@ command to show accurate time
   + etc.
 + agenda dashboard (org google calendar etc.)
 + rebuild nix config (+ for home manager)
-
+* Misc
++ use gcm with pass backend
++ set up vpn
