@@ -33,7 +33,8 @@
 
     plymouth = {
       enable = true;
-      theme = "breeze";
+      themePackages = [ pkgs.adi1090x-plymouth-themes ];
+      theme = "hexa_retro";
     };
 
     loader = {
