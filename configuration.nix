@@ -31,6 +31,11 @@
       "udev.log_priority=3"
     ];
 
+    plymouth = {
+      enable = true;
+      theme = "breeze";
+    };
+
     loader = {
       timeout = lib.mkDefault 5;
       efi.canTouchEfiVariables = true;
