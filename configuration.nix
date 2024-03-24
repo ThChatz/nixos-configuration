@@ -22,7 +22,10 @@
   boot = {
     consoleLogLevel = 0;
     initrd.verbose = false;
+    initrd.systemd.enable = true;
+
     kernelParams = [
+      "quiet"
       "boot.shell_on_fail"
       "i915.fastboot=1"
       "loglevel=3"
@@ -44,6 +47,7 @@
         efiSupport = true;
         enable = true;
         device = "nodev";
+        splashImage = null;
         theme = pkgs.stdenv.mkDerivation {
           pname = "arcade-grub-theme";
           version = "1.0";
