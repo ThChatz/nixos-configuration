@@ -34,10 +34,21 @@
     loader = {
       timeout = lib.mkDefault 5;
       efi.canTouchEfiVariables = true;
-      systemd-boot = {
+      grub = {
+        efiSupport = true;
         enable = true;
-        editor = false;
-        configurationLimit = 100;
+        device = "nodev";
+        theme = pkgs.stdenv.mkDerivation {
+          pname = "arcade-grub-theme";
+          version = "1.0";
+          src = pkgs.fetchFromGitHub {
+            owner = "nobreDaniel";
+            repo = "dotfile";
+            rev = "bded617";
+            hash = "sha256-NSnVEoLvBrUmaQgAcQdT1ZI+ngVJ4KGku29iXYUyIPM=";
+          };
+          installPhase = "cp -r Arcade $out";
+        };
       };
     };
   };
