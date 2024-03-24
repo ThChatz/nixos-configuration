@@ -1,4 +1,4 @@
-* TODO nix-os [2/9]
+* TODO nix-os [2/10]
 ** DONE Move to flakes
 ** TODO erase root on reboot
 https://grahamc.com/blog/erase-your-darlings/
@@ -8,10 +8,19 @@ https://grahamc.com/blog/erase-your-darlings/
 can figure out more after mounting empty root :)
 save wifi/bluetooth
 logs
+*** TODO mount empty root on boot
+*** TODO clean up unecessary subvolumes / files
 ** DONE cron job for snapshotting home directory
 ** TODO declarative users + passwords
 useful for nixos-rebuild build-vm
 maybe hashed password files + git crypt for remotes
+** TODO Organize bootloader entries
+*** TODO Group by branch
+This will allow a 'stable' branch with tested commits and feature and testing branches with more commits in between
+Will make going back to a stable version easier
+stable gets a boot entry only when a merge is made(?) so that it's bootloader entries are a git log
+**** TODO Switch to branch
+*** TODO label versions with date + commit message + tag
 ** TODO use deploy-rs for managing different systems + home-manager
 ** TODO CI/CD
 ** TODO remote backup system [0/2]
