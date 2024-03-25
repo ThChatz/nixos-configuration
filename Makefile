@@ -1,8 +1,10 @@
+REBUILD_ARGS=--flake . --profile-name $$(git branch --show-current)
+
 test:
 	sudo -A nixos-rebuild test --flake .
 
 switch: configuration.nix hardware-configuration.nix flake.nix flake.lock
-	sudo -A nixos-rebuild switch --flake . --profile-name $$(git branch --show-current) && touch switch
+	sudo -A nixos-rebuild switch $(REBUILD_ARGS) && touch switch
 
 update: flake.lock
 
