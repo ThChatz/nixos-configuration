@@ -15,36 +15,44 @@ logs
 useful for nixos-rebuild build-vm
 maybe hashed password files + git crypt for remotes
 ** TODO Organize bootloader entries
-*** TODO Group by branch
+*** DONE Group by branch
 This will allow a 'stable' branch with tested commits and feature and testing branches with more commits in between
 Will make going back to a stable version easier
 stable gets a boot entry only when a merge is made(?) so that it's bootloader entries are a git log
-**** TODO Switch to branch
 *** TODO label versions with date + commit message + tag
+Since stable gets boot entries on merge, commit messages should be different between versions :)
+*** TODO git hook for creating boot entries when merging on stable
 ** TODO use deploy-rs for managing different systems + home-manager
 ** TODO CI/CD
-** TODO remote backup system [0/2]
+** TODO remote backup system [0/3]
 *** TODO git-annex to cloud for specific files
 git-annex could also help to reduce snapshot size if i ever store
 snapshots on object storage
 *** TODO btrfs-send 
+*** TODO send btrfs snapshots to remote
++ VPS
++ object storage (google, s3, etc.)
 
+  maybe tools for fetching and storing in the snapper subvolume(?)
 ** TODO global secrets
 + backup buckets
 + loophole tokens(?)
 ** TODO Set up services
 *** TODO ssh w/ pgp key for backups
-* home-manager [2/8]
+* home-manager [2/9]
 
 ** TODO Use home-manager
 ** TODO syncthing
-** TODO maybe move some of emacs config to nix(?)
-  + prebuilt packages
+can use phone for always up machine
+can sync game data (homm3 saves, minecraft worlds, etc)
 ** TODO move user packages here (emacs config dependencies, etc.)
+*** maybe move some of emacs config to nix(?)
+  + prebuilt packages
+
 *** prettier
 *** ccls
 *** prolog installation (for ediprolog(?))
-
+*** i3 stuff
 ** TODO tmpfs home
 if using home-manager maybe snapshotting specific directories is bettter
 persistent-home directory and simlink subdirs from there?
@@ -65,12 +73,12 @@ snapshot only @persistent/<username>
 @persistent/cache is only for persistent files that should not be in backup (gpg db, browser data(?))
 
 maybe not per username caches since we don't snapshot these
-** TODO look more into secret management [1/2]
-*** TODO kaggle token
+** DONE look more into secret management [1/1]
+*** +TODO kaggle token+
 syncthing(?)
 *** DONE email accounts (?)
 probably should be in password-store
-** DONE +CI/CD+ (will be included with system config)
+** +DONE CI/CD+ (will be included with system config)
 ** DONE change window managers -- keeping i3 for now
 Using a keybind daemon for application launching could make transitions easier
 X is dying but xdotool >>> ydotool (due to ewmh)
@@ -104,8 +112,8 @@ default layout is dogwater (fixable from wm); also having some temporary frames 
 ***** God help me
 **** SQL
 ***** completion
-***** superset integration
-qutebrowser seems good enough for this
+***** +superset integration+ emacs connection to bigquery is better or use superset api
++qutebrowser seems good enough for this+
 *** TODO qutebrowser 
 figure out kb-only inspect element
 integrate pass
@@ -130,5 +138,24 @@ command to show accurate time
 + agenda dashboard (org google calendar etc.)
 + rebuild nix config (+ for home manager)
 * Misc
-+ use gcm with pass backend
-+ set up vpn
+** use gcm with pass backend
+** set up vpn
+** migrate to gopass or passage
+gopass works with passff and age encryption so win-win tbh
+*** Key rotation
+public keys in repo and multiple recipients will allow for key rotations:
+#+BEGIN_EXAMPLE
+each machine has its own key
+public keys are all in the store
+
+machine A wants to rotate keys
+
+replaces the public key in the store;
+encrypts the store with the new receipients
+
+might be a headache in merging
+#+END_EXAMPLE
+
+Could set up a chron job for this to execute every 2 weeks on linux
+
+age encryption doesn't work in android password store :'( maybe time for a PR.
