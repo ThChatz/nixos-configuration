@@ -181,6 +181,8 @@
      kubectl
      kubernetes-helm
      pavucontrol
+     git-credential-manager
+     pass-git-helper
   ];
 
   environment.pathsToLink = [ "/libexec" ];
@@ -256,7 +258,12 @@
   # started in user sessions.
 
   programs = {
-    git.enable = true; 
+    git = {
+      enable = true;
+      package = pkgs.gitFull;
+      config.credential.helper = "gpg";
+    };
+    
     gnupg.agent = {
       enable = true;
       enableSSHSupport = true;
