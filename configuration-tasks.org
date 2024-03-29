@@ -14,6 +14,7 @@ logs
 ** TODO declarative users + passwords
 useful for nixos-rebuild build-vm
 maybe hashed password files + git crypt for remotes
+*** TODO figure out krops (or similar)
 ** TODO Organize bootloader entries
 *** DONE Group by branch
 This will allow a 'stable' branch with tested commits and feature and testing branches with more commits in between
@@ -30,17 +31,16 @@ git-annex could also help to reduce snapshot size if i ever store
 snapshots on object storage
 *** TODO btrfs-send 
 *** TODO send btrfs snapshots to remote
+**** TODO get a "remote"
 + VPS
 + object storage (google, s3, etc.)
 
   maybe tools for fetching and storing in the snapper subvolume(?)
+
 ** TODO global secrets
 + backup buckets
 + loophole tokens(?)
-** TODO Set up services
-*** TODO ssh w/ pgp key for backups
 * home-manager [2/9]
-
 ** TODO Use home-manager
 ** TODO syncthing
 can use phone for always up machine
@@ -66,13 +66,13 @@ persistent-home directory and simlink subdirs from there?
   
 *** TODO Organize home dir
 *** TODO mounting scheme
-distinct '@persistent/<username>' and
-'@persistent/cache/<username>' subvolumes,
+subvolumes:
++ @persistent
++ @persistent/home/<username> <- snapper goes here
 
-snapshot only @persistent/<username>
-@persistent/cache is only for persistent files that should not be in backup (gpg db, browser data(?))
+@persistent/misc/<username> -- not a subvolume; this is not backed up
+@persistent/misc/<username> is only for persistent files that should not be in backup (gpg db, browser data(?), docker, etc.)
 
-maybe not per username caches since we don't snapshot these
 ** DONE look more into secret management [1/1]
 *** +TODO kaggle token+
 syncthing(?)
