@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, arcade-grub-theme, ... }:
 
 {
   nix = {
@@ -52,17 +52,7 @@
         device = "nodev";
         splashImage = null;
         gfxpayloadEfi = "text";
-        theme = pkgs.stdenv.mkDerivation {
-          pname = "arcade-grub-theme";
-          version = "1.0";
-          src = pkgs.fetchFromGitHub {
-            owner = "nobreDaniel";
-            repo = "dotfile";
-            rev = "bded617";
-            hash = "sha256-NSnVEoLvBrUmaQgAcQdT1ZI+ngVJ4KGku29iXYUyIPM=";
-          };
-          installPhase = "cp -r Arcade $out";
-        };
+        theme = arcade-grub-theme;
       };
     };
   };
