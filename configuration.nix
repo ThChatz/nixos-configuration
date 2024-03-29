@@ -3,7 +3,6 @@
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
 { config, pkgs, lib, arcade-grub-theme, ... }:
-
 {
   nix = {
     package = pkgs.nixFlakes;
@@ -50,9 +49,9 @@
         efiSupport = true;
         enable = true;
         device = "nodev";
-        splashImage = null;
-        gfxpayloadEfi = "text";
-        theme = arcade-grub-theme;
+        splashImage = arcade-grub-theme.defaultPackage."x86_64-linux".outPath + "/splash.png";
+        gfxmodeEfi = "1920x1080";
+        theme = arcade-grub-theme.defaultPackage."x86_64-linux".outPath;
       };
     };
   };

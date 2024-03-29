@@ -7,7 +7,7 @@
     };
 
     arcade-grub-theme = {
-      url = "github:ThChatz/arcade-grub-theme/58223a4";
+      url = "github:ThChatz/arcade-grub-theme";
     };
   };
 
