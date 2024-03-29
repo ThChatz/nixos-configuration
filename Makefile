@@ -1,3 +1,4 @@
+export NIXOS_LABEL=$$(git show HEAD -q --pretty=reference)
 REBUILD_ARGS=--flake . --profile-name $$(git branch --show-current)
 
 test:
