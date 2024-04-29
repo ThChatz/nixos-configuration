@@ -212,6 +212,8 @@
     pulse.enable = true;
   };
 
+  services.displayManager.defaultSession = "none+i3";
+
   services.xserver = {
   	enable = true;
 
@@ -226,7 +228,6 @@
 		};
 
 		displayManager = {
-		  defaultSession = "none+i3";
 			lightdm.enable = true;
 		};
 
