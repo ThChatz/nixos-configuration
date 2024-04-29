@@ -170,8 +170,7 @@
      kubectl
      kubernetes-helm
      pavucontrol
-     git-credential-manager
-     pass-git-helper
+     git-credential-oauth
   ];
 
   environment.pathsToLink = [ "/libexec" ];
@@ -250,7 +249,6 @@
     git = {
       enable = true;
       package = pkgs.gitFull;
-      config.credential.helper = "gpg";
     };
     
     gnupg.agent = {
@@ -263,6 +261,7 @@
       };
     };
     openvpn3.enable = true;
+    direnv.enable = true;
   };
   # programs.mtr.enable = true;
 

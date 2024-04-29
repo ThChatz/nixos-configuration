@@ -11,7 +11,7 @@ logs
 *** TODO mount empty root on boot
 *** TODO clean up unecessary subvolumes / files
 ** DONE cron job for snapshotting home directory
-** TODO declarative users + passwords
+** TODO declarative users + passwords                                  :NEXT:
 useful for nixos-rebuild build-vm
 maybe hashed password files + git crypt for remotes
 *** TODO figure out krops (or similar)
@@ -25,11 +25,10 @@ Since stable gets boot entries on merge, commit messages should be different bet
 *** TODO git hook for creating boot entries when merging on stable
 ** TODO use deploy-rs for managing different systems + home-manager
 ** TODO CI/CD
-** TODO remote backup system [0/3]
+** TODO remote backup system [0/2]
 *** TODO git-annex to cloud for specific files
 git-annex could also help to reduce snapshot size if i ever store
 snapshots on object storage
-*** TODO btrfs-send 
 *** TODO send btrfs snapshots to remote
 **** TODO get a "remote"
 + VPS
