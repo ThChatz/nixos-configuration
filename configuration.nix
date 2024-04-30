@@ -280,6 +280,12 @@
   services.blueman.enable = true;
   services.passSecretService.enable = true;
 
+  services.fprintd = {
+    enable = true;
+    tod.enable = true;
+    tod.driver = pkgs.libfprint-2-tod1-vfs0090;
+  };
+
   services.openssh = {
     enable = true;
     # require public key authentication for better security
