@@ -9,6 +9,9 @@
     extraOptions = ''
     experimental-features = nix-command flakes
   '';
+    settings.trusted-users = [
+      "@wheel"
+    ];
   };
 
   imports =
@@ -171,6 +174,7 @@
      kubernetes-helm
      pavucontrol
      git-credential-oauth
+     
   ];
 
   environment.pathsToLink = [ "/libexec" ];
@@ -282,6 +286,7 @@
 
   services.fprintd = {
     enable = true;
+    package = pkgs.fprintd-tod;
     tod.enable = true;
     tod.driver = pkgs.libfprint-2-tod1-vfs0090;
   };
