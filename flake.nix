@@ -1,5 +1,5 @@
 {
-  description = "flake for tchz-thinkpad";
+  description = "A flake nix configuration for personal use";
 
   inputs = {
     nixpkgs = {
@@ -8,10 +8,12 @@
 
     arcade-grub-theme = {
       url = "github:ThChatz/arcade-grub-theme";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
-  outputs = { self, nixpkgs, arcade-grub-theme }@inputs: {
+  outputs = { self, nixpkgs, arcade-grub-theme }@inputs:
+    {
     nixosConfigurations = {
       tchz-thinkpad = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";

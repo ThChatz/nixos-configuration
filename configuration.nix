@@ -8,10 +8,12 @@
     package = pkgs.nixFlakes;
     extraOptions = ''
     experimental-features = nix-command flakes
-  '';
-    settings.trusted-users = [
-      "@wheel"
-    ];
+    '';
+    settings = {
+      trusted-users = [
+        "@wheel"
+      ]; 
+    };
   };
 
   imports =
@@ -52,9 +54,9 @@
         efiSupport = true;
         enable = true;
         device = "nodev";
-        splashImage = arcade-grub-theme.defaultPackage."x86_64-linux".outPath + "/splash.png";
+        splashImage = arcade-grub-theme.defaultPackage.${pkgs.system}.outPath + "/splash.png";
         gfxmodeEfi = "1920x1080";
-        theme = arcade-grub-theme.defaultPackage."x86_64-linux".outPath;
+        theme = arcade-grub-theme.defaultPackage.${pkgs.system}.outPath;
       };
     };
   };
@@ -174,7 +176,7 @@
      kubernetes-helm
      pavucontrol
      git-credential-oauth
-     
+     prismlauncher
   ];
 
   environment.pathsToLink = [ "/libexec" ];
