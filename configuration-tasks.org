@@ -1,4 +1,4 @@
-* TODO nix-os [2/10]
+* TODO nix-os [3/9]
 ** DONE Move to flakes
 ** TODO erase root on reboot
 https://grahamc.com/blog/erase-your-darlings/
@@ -15,7 +15,7 @@ logs
 useful for nixos-rebuild build-vm
 maybe hashed password files + git crypt for remotes
 *** TODO figure out krops (or similar)
-** TODO Organize bootloader entries
+** DONE Organize bootloader entries
 *** DONE Group by branch
 This will allow a 'stable' branch with tested commits and feature and testing branches with more commits in between
 Will make going back to a stable version easier
@@ -23,7 +23,10 @@ stable gets a boot entry only when a merge is made(?) so that it's bootloader en
 *** TODO label versions with date + commit message + tag
 Since stable gets boot entries on merge, commit messages should be different between versions :)
 *** TODO git hook for creating boot entries when merging on stable
-** TODO use deploy-rs for managing different systems + home-manager
+** TODO use +deploy-rs+ targets for managing different systems + home-manager
++ new thinkpad
++ home desktop
++ raspberry pi
 ** TODO CI/CD
 ** TODO remote backup system [0/2]
 *** TODO git-annex to cloud for specific files

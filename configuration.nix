@@ -100,12 +100,14 @@
   # fonts
   fonts.packages = with pkgs; [
   line-awesome
+  font-awesome
   siji
-  unifont
   source-code-pro
   cm_unicode
   liberation_ttf
   corefonts
+  google-fonts
+  symbola
   ];
 
 
@@ -119,6 +121,11 @@
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
+  nixpkgs.config.permittedInsecurePackages = [
+    "qtwebkit-5.212.0-alpha4"
+  ];
+
+
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
@@ -177,6 +184,11 @@
      pavucontrol
      git-credential-oauth
      prismlauncher
+     eww
+     pamixer
+     jq
+     xkblayout-state
+     inotify-tools
   ];
 
   environment.pathsToLink = [ "/libexec" ];
@@ -188,10 +200,6 @@
       enable = true;
       powerOnBoot = true;
       settings.General.Enable = "Source,Sink,Media,Socket";
-    };
-    pulseaudio = {
-      enable = false;
-      package = pkgs.pulseaudioFull;
     };
   };
 
@@ -240,6 +248,7 @@
 		windowManager.i3 = {
 		  enable = true;
 			extraPackages = with pkgs; [
+        eww
 				rofi
 				polybarFull
 			];
