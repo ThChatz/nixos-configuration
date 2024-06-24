@@ -13,19 +13,19 @@
   };
 
   outputs = { self, nixpkgs, arcade-grub-theme }@inputs:
-    {
-    nixosConfigurations = {
-      tchz-thinkpad = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
+    let
+      mkSystem = conf: nixpkgs.lib.nixosSystem {
         modules = [
           {
             _module.args = inputs;
           }
-          ./hosts/tchz-yoga260/configuration.nix
-          ./hosts/tchz-yoga260/hardware-configuration.nix
-          ./modules/configuration.nix
+          conf
         ];
       };
+    in
+    {
+    nixosConfigurations = {
+      tchz-yoga260 = mkSystem ./hosts/tchz-yoga260;
 
       tchz-t480 = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
