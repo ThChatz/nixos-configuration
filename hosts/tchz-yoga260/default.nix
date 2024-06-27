@@ -9,6 +9,7 @@ args@{ config, pkgs, lib, arcade-grub-theme, ... }:
         ./hardware-configuration.nix
       ];
 
+    # networking.hostName = lib.mkForce "tchz-yoga260"; # Define your hostname.
     # This value determines the NixOS release from which the default
     # settings for stateful data, like file locations and database versions
     # on your system were taken. It‘s perfectly fine and recommended to leave
