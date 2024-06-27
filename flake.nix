@@ -23,8 +23,10 @@
               {name = name;
                value = nixpkgs.lib.nixosSystem {
                  modules = [
-                   {_module.args = inputs;}
+                   {_module.args = inputs;
+                    networking.hostname="${name}"; }
                    ./hosts/${name}
+                   ./common
                  ];
                };
               })
