@@ -12,7 +12,9 @@
     settings = {
       trusted-users = [
         "@wheel"
-      ]; 
+      ];
+      substituters = lib.mkAfter ["https://nixpkgs.cachix.org"];
+      trusted-public-keys = lib.mkAfter ["nixpkgs.cachix.org-1:q91R6hxbwFvDqTSDKwDAV4T5PxqXGxswD8vhONFMeOE="];
     };
   };
   # Bootloader.
