@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, lib, arcade-grub-theme, ... }:
+{ config, pkgs, lib, arcade-grub-theme, agenix, ... }:
 {
   nix = {
     package = pkgs.nixFlakes;
@@ -107,14 +107,23 @@
   ];
 
 
-  # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.users.tchz = {
-    isNormalUser = true;
-    description = "Theo Chatziioannidis";
-    extraGroups = [ "networkmanager" "wheel" ];
-    packages = with pkgs; [ emacsPackages.vterm ];
+  # load system wide secrets
+  age.secrets.tchz-password-hash.file = ./agenix/tchz-password-hash.age;
+
+
+  users = {
+    # Define a user account.
+    users.tchz = {
+      isNormalUser = true;
+      description = "Theo Chatziioannidis";
+      extraGroups = [ "networkmanager" "wheel" ];
+      packages = with pkgs; [ emacsPackages.vterm ];
+      hashedPasswordFile=config.age.secrets.tchz-password-hash.path;
+    };
+    mutableUsers = false;
   };
 
+  
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
   nixpkgs.config.permittedInsecurePackages = [
@@ -128,7 +137,8 @@
   environment.systemPackages = with pkgs; [
   #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
   #  wget
-     emacs29
+    agenix.packages."${system}".default
+    emacs29
      rxvt-unicode
      (firefox.override
        { nativeMessagingHosts = [ passff-host ]; })
