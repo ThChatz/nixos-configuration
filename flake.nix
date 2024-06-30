@@ -11,9 +11,14 @@
       url = "github:ThChatz/arcade-grub-theme";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    agenix = {
+      url = "github:ryantm/agenix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { self, nixpkgs, arcade-grub-theme }@inputs:
+  outputs = { self, nixpkgs, arcade-grub-theme, agenix }@inputs:
     {
       # generate system definitions from directories in ./hosts
       nixosConfigurations =
@@ -30,6 +35,7 @@
                     networking.hostName = lib.mkForce "${name}";}
                    ./hosts/${name}
                    ./common
+                   agenix.nixosModules.default
                  ];
                };
               })
