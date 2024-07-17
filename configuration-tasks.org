@@ -30,10 +30,12 @@ Since stable gets boot entries on merge, commit messages should be different bet
 *** cache on cachix
 *** automate using gh actions
 ** TODO remote backup system
-borgbuckup seems to do exactly what im looking for here
-also has the benefit of being decoupled from btrfs -- could make switching FSes easier in the future
+solution: restic + backblaze bucket
+pros:
++ can ignore patterns (e.g. node_modules) to save (lots of) space
++ restic can push to s3 compatible storage
++ backblaze is very cheat atm, 6$/TB/month
 
-https://www.borgbase.com/ -- easy to setup, pricing looks good but def not the cheapest storage
 * home-manager [2/9]
 ** TODO Use home-manager
 ** TODO syncthing
@@ -72,7 +74,6 @@ subvolumes:
 syncthing(?)
 *** DONE email accounts (?)
 probably should be in password-store
-** +DONE CI/CD+ (will be included with system config)
 ** DONE change window managers -- keeping i3 for now
 Using a keybind daemon for application launching could make transitions easier
 X is dying but xdotool >>> ydotool (due to ewmh)
