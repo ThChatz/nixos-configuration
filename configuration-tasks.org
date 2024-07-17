@@ -109,10 +109,6 @@ default layout is dogwater (fixable from wm); also having some temporary frames 
 ***** completion
 ***** +superset integration+ emacs connection to bigquery is better or use superset api
 +qutebrowser seems good enough for this+
-*** TODO qutebrowser 
-figure out kb-only inspect element
-integrate pass
-set better user agent
 *** TODO pomodoro timer
 **** Keybinds
 + pomodoro-step
