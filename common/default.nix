@@ -262,7 +262,18 @@
 		};
   };
 
-  
+  services.avahi = {
+    enable = true;
+    nssmdns4 = true;
+    openFirewall = true;
+    publish.enable = true;
+    publish.domain = true;
+  };
+
+  services.printing = {
+    enable = true;
+    drivers = [pkgs.hplipWithPlugin];
+  };
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
@@ -315,6 +326,8 @@
     settings.KbdInteractiveAuthentication = false;
     #settings.PermitRootLogin = "yes";
   };
+
+  services.resolved.enable = true;
 
   virtualisation.docker.rootless = {
     enable = true;
