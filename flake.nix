@@ -16,9 +16,14 @@
       url = "github:ryantm/agenix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    home-manager = {
+      url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { self, nixpkgs, arcade-grub-theme, agenix }@inputs:
+  outputs = { self, nixpkgs, arcade-grub-theme, agenix, home-manager }@inputs:
     {
       # generate system definitions from directories in ./hosts
       nixosConfigurations =

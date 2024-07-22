@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, lib, arcade-grub-theme, agenix, ... }:
+args@{ config, pkgs, lib, arcade-grub-theme, agenix, ... }:
 {
   nix = {
     package = pkgs.nixFlakes;
@@ -113,13 +113,7 @@
 
   users = {
     # Define a user account.
-    users.tchz = {
-      isNormalUser = true;
-      description = "Theo Chatziioannidis";
-      extraGroups = [ "networkmanager" "wheel" ];
-      packages = with pkgs; [ emacsPackages.vterm ];
-      hashedPasswordFile=config.age.secrets.tchz-password-hash.path;
-    };
+    users.tchz = (import ../users/tchz/user) args;
     mutableUsers = false;
   };
 

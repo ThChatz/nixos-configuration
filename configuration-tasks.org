@@ -9,14 +9,15 @@ https://grahamc.com/blog/erase-your-darlings/
 can figure out more after mounting empty root :)
 save wifi/bluetooth
 logs
+ssh keys **important for secrets**
 *** TODO mount empty root on boot
-*** TODO clean up unecessary subvolumes / files
 ** DONE cron job for snapshotting home directory
 ** DONE declarative users + passwords                                  :NEXT:
 useful for nixos-rebuild build-vm
 +maybe hashed password files + git crypt for remotes+
 used agenix to store hashed password file
-*** TODO figure out krops (or similar)
+*** DONE figure out krops (or similar)
+used agenix
 ** DONE Organize bootloader entries
 *** DONE Group by branch
 This will allow a 'stable' branch with tested commits and feature and testing branches with more commits in between
