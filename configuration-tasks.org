@@ -1,19 +1,21 @@
-* TODO nix-os [3/9]
+* TODO nix-os [4/7]
 ** DONE Move to flakes
 ** TODO erase root on reboot
 https://grahamc.com/blog/erase-your-darlings/
 *** DONE @nix subvolume + move /nix/* to it
 *** DONE make sure /home is safe
 *** TODO impermanence
+(will set up on new laptop)
 can figure out more after mounting empty root :)
 save wifi/bluetooth
 logs
 *** TODO mount empty root on boot
 *** TODO clean up unecessary subvolumes / files
 ** DONE cron job for snapshotting home directory
-** TODO declarative users + passwords                                  :NEXT:
+** DONE declarative users + passwords                                  :NEXT:
 useful for nixos-rebuild build-vm
-maybe hashed password files + git crypt for remotes
++maybe hashed password files + git crypt for remotes+
+used agenix to store hashed password file
 *** TODO figure out krops (or similar)
 ** DONE Organize bootloader entries
 *** DONE Group by branch
@@ -23,25 +25,17 @@ stable gets a boot entry only when a merge is made(?) so that it's bootloader en
 *** TODO label versions with date + commit message + tag
 Since stable gets boot entries on merge, commit messages should be different between versions :)
 *** TODO git hook for creating boot entries when merging on stable
-** TODO use +deploy-rs+ targets for managing different systems + home-manager
-+ new thinkpad
-+ home desktop
-+ raspberry pi
 ** TODO CI/CD
-** TODO remote backup system [0/2]
-*** TODO git-annex to cloud for specific files
-git-annex could also help to reduce snapshot size if i ever store
-snapshots on object storage
-*** TODO send btrfs snapshots to remote
-**** TODO get a "remote"
-+ VPS
-+ object storage (google, s3, etc.)
+*** remote build on https://nixbuild.net/
+*** cache on cachix
+*** automate using gh actions
+** TODO remote backup system
+solution: restic + backblaze bucket
+pros:
++ can ignore patterns (e.g. node_modules) to save (lots of) space
++ restic can push to s3 compatible storage
++ backblaze is very cheat atm, 6$/TB/month
 
-  maybe tools for fetching and storing in the snapper subvolume(?)
-
-** TODO global secrets
-+ backup buckets
-+ loophole tokens(?)
 * home-manager [2/9]
 ** TODO Use home-manager
 ** TODO syncthing
@@ -80,7 +74,6 @@ subvolumes:
 syncthing(?)
 *** DONE email accounts (?)
 probably should be in password-store
-** +DONE CI/CD+ (will be included with system config)
 ** DONE change window managers -- keeping i3 for now
 Using a keybind daemon for application launching could make transitions easier
 X is dying but xdotool >>> ydotool (due to ewmh)
@@ -116,10 +109,6 @@ default layout is dogwater (fixable from wm); also having some temporary frames 
 ***** completion
 ***** +superset integration+ emacs connection to bigquery is better or use superset api
 +qutebrowser seems good enough for this+
-*** TODO qutebrowser 
-figure out kb-only inspect element
-integrate pass
-set better user agent
 *** TODO pomodoro timer
 **** Keybinds
 + pomodoro-step
@@ -140,7 +129,6 @@ command to show accurate time
 + agenda dashboard (org google calendar etc.)
 + rebuild nix config (+ for home manager)
 * Misc
-** use gcm with pass backend
 ** set up vpn
 ** migrate to gopass or passage
 gopass works with passff and age encryption so win-win tbh

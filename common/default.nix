@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, lib, arcade-grub-theme, ... }:
+{ config, pkgs, lib, arcade-grub-theme, agenix, ... }:
 {
   nix = {
     package = pkgs.nixFlakes;
@@ -12,15 +12,11 @@
     settings = {
       trusted-users = [
         "@wheel"
-      ]; 
+      ];
+      substituters = lib.mkAfter ["https://nixpkgs.cachix.org"];
+      trusted-public-keys = lib.mkAfter ["nixpkgs.cachix.org-1:q91R6hxbwFvDqTSDKwDAV4T5PxqXGxswD8vhONFMeOE="];
     };
   };
-
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-    ];
-
   # Bootloader.
 
   boot = {
@@ -111,14 +107,23 @@
   ];
 
 
-  # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.users.tchz = {
-    isNormalUser = true;
-    description = "Theo Chatziioannidis";
-    extraGroups = [ "networkmanager" "wheel" ];
-    packages = with pkgs; [ emacsPackages.vterm ];
+  # load system wide secrets
+  age.secrets.tchz-password-hash.file = ./agenix/tchz-password-hash.age;
+
+
+  users = {
+    # Define a user account.
+    users.tchz = {
+      isNormalUser = true;
+      description = "Theo Chatziioannidis";
+      extraGroups = [ "networkmanager" "wheel" ];
+      packages = with pkgs; [ emacsPackages.vterm ];
+      hashedPasswordFile=config.age.secrets.tchz-password-hash.path;
+    };
+    mutableUsers = false;
   };
 
+  
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
   nixpkgs.config.permittedInsecurePackages = [
@@ -132,7 +137,8 @@
   environment.systemPackages = with pkgs; [
   #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
   #  wget
-     emacs29
+    agenix.packages."${system}".default
+    emacs29
      rxvt-unicode
      (firefox.override
        { nativeMessagingHosts = [ passff-host ]; })
@@ -210,11 +216,11 @@
         ALLOW_USERS = [ "tchz" ];
         TIMELINE_CREATE = true;
         TIMELINE_CLEANUP = true;
-        TIMELINE_LIMIT_HOURLY = 24;
-        TIMELINE_LIMIT_DAILY = 15;
-        TIMELINE_LIMIT_WEEKLY = 3;
-        TIMELINE_LIMIT_MONTHLY = 24;
-        TIMELINE_LIMIT_YEARLY = 100;
+        TIMELINE_LIMIT_HOURLY = "24";
+        TIMELINE_LIMIT_DAILY = "15";
+        TIMELINE_LIMIT_WEEKLY = "3";
+        TIMELINE_LIMIT_MONTHLY = "24";
+        TIMELINE_LIMIT_YEARLY = "100";
       };
     };
   };
@@ -256,7 +262,18 @@
 		};
   };
 
-  
+  services.avahi = {
+    enable = true;
+    nssmdns4 = true;
+    openFirewall = true;
+    publish.enable = true;
+    publish.domain = true;
+  };
+
+  services.printing = {
+    enable = true;
+    drivers = [pkgs.hplipWithPlugin];
+  };
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
@@ -309,6 +326,8 @@
     settings.KbdInteractiveAuthentication = false;
     #settings.PermitRootLogin = "yes";
   };
+
+  services.resolved.enable = true;
 
   virtualisation.docker.rootless = {
     enable = true;
