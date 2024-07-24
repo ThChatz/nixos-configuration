@@ -72,6 +72,12 @@ args@{ config, pkgs, lib, arcade-grub-theme, agenix, ... }:
     pkgs.networkmanager-openvpn
   ];
 
+  # open some ports
+  networking.firewall = {
+    enable = true;
+    allowedTCPPorts = [ 80 8080 ];
+  };
+
   # Set your time zone.
   time.timeZone = "Europe/Athens";
 
