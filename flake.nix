@@ -24,12 +24,12 @@
   };
 
   outputs = { self, nixpkgs, arcade-grub-theme, agenix, home-manager }@inputs:
+    let
+      lib = nixpkgs.lib;
+    in
     {
       # generate system definitions from directories in ./hosts
       nixosConfigurations =
-        let
-          lib = nixpkgs.lib;
-        in
         builtins.listToAttrs (
           map
             (name:
@@ -44,7 +44,29 @@
                  ];
                };
               })
-            (nixpkgs.lib.attrsets.attrNames (builtins.readDir ./hosts))
+            (lib.attrsets.attrNames (builtins.readDir ./hosts))
+        );
+
+      # generate home configuration from directories in ./
+      homeConfigurations = 
+        let
+          pkgs = nixpkgs.legacyPackages."x86_64-linux";
+        in
+        builtins.listToAttrs (
+          map
+            (name:
+              {name = name;
+               value =
+                 home-manager.lib.homeManagerConfiguration {
+                   inherit pkgs;
+                   modules = [
+                     ./users/${name}/home.nix
+                   ];
+                   # Optionally use extraSpecialArgs
+                   # to pass through arguments to home.nix
+                 };
+              })
+            (nixpkgs.lib.attrsets.attrNames (builtins.readDir ./users))
         );
     };
 }
