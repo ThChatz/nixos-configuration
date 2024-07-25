@@ -6,6 +6,7 @@ in
     public-keys.tchz-yoga260.system
     public-keys.tchz-yoga260.users.tchz
     public-keys.tchz-t480.system
+    public-keys.tchz-t480.users.tchz
   ];
 }
 # `agenix -r` to rekey :)
