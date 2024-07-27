@@ -13,6 +13,10 @@ switch: test boot
 
 update: flake.lock
 
+hm-switch:
+	home-manager switch --flake .
+
+
 .PHONY: flake.lock
 flake.lock:
 	nix flake update

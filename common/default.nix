@@ -268,6 +268,12 @@ args@{ config, pkgs, lib, arcade-grub-theme, agenix, ... }:
     openFirewall = true;
     publish.enable = true;
     publish.domain = true;
+    denyInterfaces = ["point-to-point"];
+  };
+
+  services.nginx.enable = true;
+  services.nginx.virtualHosts.default.locations = {
+    "/hello".root = (pkgs.writeTextDir "/hello/index.html" "hello!");
   };
 
   services.printing = {
