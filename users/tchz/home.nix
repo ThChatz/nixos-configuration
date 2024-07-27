@@ -35,26 +35,18 @@
     # (pkgs.writeShellScriptBin "my-hello" ''
     #   echo "Hello, ${config.home.username}!"
     # '')
+      pkgs.emacs-with-config
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.
   nixpkgs.overlays = [
-    (final: prev: {
-      emacs-config = final.fetchFromGitHub {
-          owner = "thchatz";
-          repo = "emacs-org-config";
-          rev = "310a185de01a6b7ba526c5850a69e242cf320027";
-          hash = "sha256-iQFU+iM41cQZ+2x3reJg8PxwB46xU4lZzTlhBNPng4w=";
-      };
-    })
   ];
 
   home.file = {
     # # Building this configuration will create a copy of 'dotfiles/screenrc' in
       # # the Nix store. Activating the configuration will then make '~/.screenrc' a
       
-    ".emacs.d/conf.org".source = pkgs.emacs-config.outPath + "/conf.org";
     # # symlink to the Nix store copy.
     # ".screenrc".source = dotfiles/screenrc;
 
@@ -63,6 +55,13 @@
     #   org.gradle.console=verbose
     #   org.gradle.daemon.idletimeout=3600000
     # '';
+    ".config/i3".source = pkgs.fetchFromGitHub {
+      owner = "thchatz";
+      repo = "i3-config";
+      rev = "f87a129";
+      hash = "sha256-sMT3jje6jyD2m2k3kjjdkW8QipLszRFmk03FX1bTe4w=";
+    };
+
   };
 
   # Home Manager can also manage your environment variables through

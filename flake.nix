@@ -21,9 +21,14 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    emacs-org-config = {
+      url = "github:ThChatz/emacs-org-config";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { self, nixpkgs, arcade-grub-theme, agenix, home-manager }@inputs:
+  outputs = { self, nixpkgs, agenix, home-manager, ... }@inputs:
     let
       lib = nixpkgs.lib;
     in
@@ -60,6 +65,10 @@
                  home-manager.lib.homeManagerConfiguration {
                    inherit pkgs;
                    modules = [
+                     { _module.args = inputs; }
+                     { nixpkgs.overlays = [
+                         inputs.emacs-org-config._overlays."x86_64-linux".default
+                       ]; }
                      ./users/${name}/home.nix
                    ];
                    # Optionally use extraSpecialArgs

@@ -76,6 +76,10 @@ args@{ config, pkgs, lib, arcade-grub-theme, agenix, ... }:
   networking.firewall = {
     enable = true;
     allowedTCPPorts = [ 80 8080 ];
+    allowedTCPPortRanges = [
+      # open ports > 65000 for other services / netcat etc.
+      { from=65000; to = 65535; }
+    ];
   };
 
   # Set your time zone.
@@ -274,6 +278,11 @@ args@{ config, pkgs, lib, arcade-grub-theme, agenix, ... }:
   services.nginx.enable = true;
   services.nginx.virtualHosts.default.locations = {
     "/hello".root = (pkgs.writeTextDir "/hello/index.html" "hello!");
+  };
+
+  services.nix-serve = {
+    enable = true;
+    port = 65000;
   };
 
   services.printing = {
