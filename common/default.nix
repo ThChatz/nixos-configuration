@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-args@{ config, pkgs, lib, arcade-grub-theme, agenix, ... }:
+args@{ config, pkgs, lib, arcade-grub-theme, agenix, home-manager, ... }:
 {
   nix = {
     package = pkgs.nixFlakes;
@@ -141,6 +141,7 @@ args@{ config, pkgs, lib, arcade-grub-theme, agenix, ... }:
   environment.systemPackages = with pkgs; [
   #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
   #  wget
+    home-manager.packages."${system}".default
     agenix.packages."${system}".default
     emacs29
      rxvt-unicode
@@ -220,11 +221,11 @@ args@{ config, pkgs, lib, arcade-grub-theme, agenix, ... }:
         ALLOW_USERS = [ "tchz" ];
         TIMELINE_CREATE = true;
         TIMELINE_CLEANUP = true;
-        TIMELINE_LIMIT_HOURLY = "24";
-        TIMELINE_LIMIT_DAILY = "15";
-        TIMELINE_LIMIT_WEEKLY = "3";
-        TIMELINE_LIMIT_MONTHLY = "24";
-        TIMELINE_LIMIT_YEARLY = "100";
+        TIMELINE_LIMIT_HOURLY = 24;
+        TIMELINE_LIMIT_DAILY = 15;
+        TIMELINE_LIMIT_WEEKLY = 3;
+        TIMELINE_LIMIT_MONTHLY = 24;
+        TIMELINE_LIMIT_YEARLY = 100;
       };
     };
   };

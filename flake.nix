@@ -25,6 +25,7 @@
     emacs-org-config = {
       url = "github:ThChatz/emacs-org-config";
       inputs.nixpkgs.follows = "nixpkgs";
+      inputs.flake-utils.inputs.system.follows = "systems";
     };
   };
 
