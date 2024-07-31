@@ -139,67 +139,68 @@ args@{ config, pkgs, lib, arcade-grub-theme, agenix, home-manager, ... }:
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-  #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-  #  wget
+    #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
+    #  wget
     home-manager.packages."${system}".default
     agenix.packages."${system}".default
     emacs29
-     rxvt-unicode
-     (firefox.override
-       { nativeMessagingHosts = [ passff-host ]; })
-     qutebrowser
-     teams-for-linux
-     skypeforlinux
-     slack
-     dmenu
-     rofi
-     pcmanfm
-     brightnessctl
-     docker-compose
-     blueman
-     bluez
-     pass
-     rofi-pass
-     feh
-     passff-host
-     gnupg
-     gcr
-     pinentry-all
-     pinentry-rofi
-     mysql-workbench
-     texlive.combined.scheme-full
-     libreoffice
-     gnome.cheese
-     zip
-     unzip
-     gzip
-     python3
-     nodejs_20
-     nodePackages.prettier
-     yarn
-     wineWowPackages.stableFull
-     lutris
-     ssh-askpass-fullscreen
-     graphviz
-     postman
-     pulsemixer
-     php
-     acpi
-     scrot
-     chromium
-     (google-cloud-sdk.withExtraComponents ([ google-cloud-sdk.components.kubectl ]))
-     hplipWithPlugin
-     eww
-     kubectl
-     kubernetes-helm
-     pavucontrol
-     git-credential-oauth
-     prismlauncher
-     eww
-     pamixer
-     jq
-     xkblayout-state
-     inotify-tools
+    rxvt-unicode
+    (firefox.override
+      { nativeMessagingHosts = [ passff-host ]; })
+    qutebrowser
+    teams-for-linux
+    skypeforlinux
+    slack
+    dmenu
+    rofi
+    pcmanfm
+    brightnessctl
+    docker-compose
+    blueman
+    bluez
+    pass
+    rofi-pass
+    feh
+    passff-host
+    gnupg
+    gcr
+    pinentry-all
+    pinentry-rofi
+    mysql-workbench
+    texlive.combined.scheme-full
+    libreoffice
+    cheese
+    zip
+    unzip
+    gzip
+    python3
+    nodejs_20
+    nodePackages.prettier
+    yarn
+    wineWowPackages.stableFull
+    lutris
+    ssh-askpass-fullscreen
+    graphviz
+    postman
+    pulsemixer
+    php
+    acpi
+    scrot
+    chromium
+    (google-cloud-sdk.withExtraComponents ([ google-cloud-sdk.components.kubectl ]))
+    hplipWithPlugin
+    eww
+    kubectl
+    kubernetes-helm
+    pavucontrol
+    git-credential-oauth
+    prismlauncher
+    eww
+    pamixer
+    jq
+    xkblayout-state
+    inotify-tools
+    gnumake
   ];
 
   environment.pathsToLink = [ "/libexec" ];
