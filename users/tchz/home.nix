@@ -89,7 +89,17 @@
   #
   home.sessionVariables = {
     EDITOR = "emacsclient";
+    SUDO_ASKPASS = "${pkgs.ssh-askpass-fullscreen}/bin/ssh-askpass-fullscreen";
   };
+
+  programs.bash.sessionVariables = {
+    EDITOR = "emacsclient";
+    SUDO_ASKPASS = "${pkgs.ssh-askpass-fullscreen}/bin/ssh-askpass-fullscreen";
+  };
+
+  home.file.".profile".source = pkgs.writeShellScript "dotprofile" ''
+   source "${config.home.profileDirectory}/etc/profile.d/hm-session-vars.sh"
+  '';
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;

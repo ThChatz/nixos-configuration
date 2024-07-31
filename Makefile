@@ -17,6 +17,6 @@ hm-switch:
 	home-manager switch --flake .
 
 
-.PHONY: flake.lock
+.PHONY: flake.lock all
 flake.lock:
 	nix flake update
