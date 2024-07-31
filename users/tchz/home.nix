@@ -1,9 +1,16 @@
 { config, pkgs, ... }:
 {
+  imports = [
+    ../../common/programs/polybar
+    ../../common/programs/rofi.nix
+  ];
+
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
   home.username = "tchz";
   home.homeDirectory = "/home/tchz";
+
+  
 
   # This value determines the Home Manager release that your configuration is
   # compatible with. This helps avoid breakage when a new Home Manager release
