@@ -3,6 +3,7 @@
   imports = [
     ../../common/programs/polybar
     ../../common/programs/rofi.nix
+    ../../common/programs/misc-dotfiles.nix
   ];
 
   # Home Manager needs a bit of information about you and the paths it should
