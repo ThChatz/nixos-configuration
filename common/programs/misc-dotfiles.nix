@@ -1,6 +1,6 @@
 {...} : {
   xresources.properties = {
-    "URxvt.font" = "xft:Source Code Pro:size=10";
+    "URxvt.font" = "xft:RobotoMono Nerd Font Mono:style=Regular:size=8";
     "URxvt*utf8" = "1";
     "URxvt*loginshell" = "true";
     "URxvt*charClass" =  ["33:48" "36-47:48" "58-59:48"
@@ -28,6 +28,7 @@
     "URxvt.scrollBar" = false;
     "URxvt*scrollTtyOutput" = false;
 
+    "URxvt.geometry" = "400x400";
      "URxvt*VT100.Translations" = ''#override \
                  Ctrl Shift <Key>V:    insert-selection(CLIPBOARD) \n\
                  Ctrl Shift <Key>C:    copy-selection(CLIPBOARD)
@@ -42,5 +43,11 @@
     "Xft.hinting" = 1;
     "Xft.antialias" = 1;
     "Xft.rgba" = "rgb";
+  };
+
+  programs.oh-my-posh = {
+    enable = true;
+    enableBashIntegration = true;
+    useTheme = "craver";
   };
 }
