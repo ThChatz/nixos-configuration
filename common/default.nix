@@ -148,7 +148,7 @@ args@{ config, pkgs, lib, arcade-grub-theme, agenix, home-manager, ... }:
     rxvt-unicode
     (firefox.override
       { nativeMessagingHosts = [ passff-host ]; })
-    qutebrowser
+    # qutebrowser
     teams-for-linux
     skypeforlinux
     slack
@@ -162,11 +162,8 @@ args@{ config, pkgs, lib, arcade-grub-theme, agenix, home-manager, ... }:
     pass
     rofi-pass
     feh
-    passff-host
     gnupg
-    gcr
     pinentry-all
-    pinentry-rofi
     mysql-workbench
     texlive.combined.scheme-full
     libreoffice
@@ -190,7 +187,6 @@ args@{ config, pkgs, lib, arcade-grub-theme, agenix, home-manager, ... }:
     chromium
     (google-cloud-sdk.withExtraComponents ([ google-cloud-sdk.components.kubectl ]))
     hplipWithPlugin
-    eww
     kubectl
     kubernetes-helm
     pavucontrol
