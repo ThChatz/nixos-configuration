@@ -58,7 +58,7 @@ args@{ config, pkgs, lib, arcade-grub-theme, agenix, home-manager, ... }:
   };
 
 
-  
+
   # networking.hostName = "tchz-thinkpad"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
@@ -128,7 +128,7 @@ args@{ config, pkgs, lib, arcade-grub-theme, agenix, home-manager, ... }:
     mutableUsers = false;
   };
 
-  
+
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
   nixpkgs.config.permittedInsecurePackages = [
@@ -291,13 +291,12 @@ args@{ config, pkgs, lib, arcade-grub-theme, agenix, home-manager, ... }:
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
-
   programs = {
     git = {
       enable = true;
       package = pkgs.gitFull;
     };
-    
+
     gnupg.agent = {
       enable = true;
       enableSSHSupport = true;
@@ -309,6 +308,8 @@ args@{ config, pkgs, lib, arcade-grub-theme, agenix, home-manager, ... }:
     };
     openvpn3.enable = true;
     direnv.enable = true;
+    steam.enable = true;        # todo: run in firejail
+    firejail.enable = true;
   };
   # programs.mtr.enable = true;
 
