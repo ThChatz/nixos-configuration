@@ -212,22 +212,6 @@ args@{ config, pkgs, lib, arcade-grub-theme, agenix, home-manager, ... }:
     };
   };
 
-  services.snapper = {
-    configs = {
-      tchz = {
-        SUBVOLUME = "/home/tchz";
-        ALLOW_USERS = [ "tchz" ];
-        TIMELINE_CREATE = true;
-        TIMELINE_CLEANUP = true;
-        TIMELINE_LIMIT_HOURLY = 24;
-        TIMELINE_LIMIT_DAILY = 15;
-        TIMELINE_LIMIT_WEEKLY = 3;
-        TIMELINE_LIMIT_MONTHLY = 24;
-        TIMELINE_LIMIT_YEARLY = 100;
-      };
-    };
-  };
-
   services.pipewire = {
     enable = true;
     alsa.enable = true;
