@@ -23,7 +23,12 @@ args@{ config, pkgs, lib, arcade-grub-theme, agenix, home-manager, ... }:
     consoleLogLevel = 0;
     initrd.verbose = false;
     initrd.systemd.enable = true;
-    initrd.kernelModules = [ "i915" ];
+
+    extraModulePackages = with config.boot.kernelPackages; [
+      acpi_call
+    ];
+
+    initrd.kernelModules = [ "i915" "acpi_call" ];
     kernelParams = [
       "quiet"
       "splash"
@@ -198,6 +203,8 @@ args@{ config, pkgs, lib, arcade-grub-theme, agenix, home-manager, ... }:
     xkblayout-state
     inotify-tools
     gnumake
+    leiningen
+    clojure
   ];
 
   environment.pathsToLink = [ "/libexec" ];
