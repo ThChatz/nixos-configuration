@@ -11,6 +11,6 @@
 
   tchz-vospro5402 = {
     system = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHm1budXz+iddOUnirLhqxseilolnTsoIVRm5J3SoifE";
-    users.theo = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHm1budXz+iddOUnirLhqxseilolnTsoIVRm5J3SoifE";
+    users.tchz = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFkPtWgnA6ZAMZjd5XtmL+45BJD/xmuHZDW7wNhkL599 tchz@tchz-vostro5402";
   };
 }
