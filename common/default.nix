@@ -119,13 +119,14 @@ args@{ config, pkgs, lib, arcade-grub-theme, agenix, home-manager, ... }:
   corefonts
   google-fonts
   symbola
-  nerdfonts
-  ];
+  ] ++
+  builtins.filter
+    lib.attrsets.isDerivation (builtins.attrValues pkgs.nerd-fonts);
 
 
   # load system wide secrets
   age.secrets.tchz-password-hash.file = ./agenix/tchz-password-hash.age;
-
+  age.secrets.gt-vpn-config.file = ./agenix/gt-vpn-config.age;
 
   users = {
     # Define a user account.
