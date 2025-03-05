@@ -4,6 +4,8 @@
 
 args@{ config, pkgs, lib, arcade-grub-theme, agenix, home-manager, ... }:
 {
+  imports = [ ./programs.nix ];
+
   nix = {
     package = pkgs.nixVersions.stable;
     extraOptions = ''
@@ -152,29 +154,12 @@ args@{ config, pkgs, lib, arcade-grub-theme, agenix, home-manager, ... }:
     home-manager.packages."${system}".default
     agenix.packages."${system}".default
     emacs29
-    rxvt-unicode
-    (firefox.override
-      { nativeMessagingHosts = [ passff-host ]; })
-    # qutebrowser
-    teams-for-linux
-    skypeforlinux
-    slack
-    dmenu
-    rofi
-    pcmanfm
-    brightnessctl
     podman-compose
-    blueman
     bluez
     pass
-    rofi-pass
-    feh
     gnupg
     pinentry-all
-    mysql-workbench
     texlive.combined.scheme-full
-    libreoffice
-    cheese
     zip
     unzip
     gzip
@@ -183,23 +168,14 @@ args@{ config, pkgs, lib, arcade-grub-theme, agenix, home-manager, ... }:
     nodePackages.prettier
     yarn
     wineWowPackages.stableFull
-    lutris
-    ssh-askpass-fullscreen
     graphviz
-    postman
     pulsemixer
     php
     acpi
     scrot
-    chromium
     (google-cloud-sdk.withExtraComponents ([ google-cloud-sdk.components.kubectl ]))
-    hplipWithPlugin
     kubectl
     kubernetes-helm
-    pavucontrol
-    git-credential-oauth
-    prismlauncher
-    eww
     pamixer
     jq
     xkblayout-state
