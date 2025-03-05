@@ -22,17 +22,6 @@
   };
 
   age.identityPaths = lib.mkAfter [ "/ssh/id_ed25519" ];
+  
   system.stateVersion = "24.05"; # Did you read the comment?
-
-  virtualisation.docker = {
-    enable = true;
-    # setSocketVariable = true;
-    daemon.settings = {
-      storage-driver = "btrfs";
-      # dns = ["1.1.1.1" "8.8.8.8"];
-    };
-  };
-
-  virtualisation.docker.rootless.enable = lib.mkForce false;
 }
-

@@ -85,6 +85,7 @@ args@{ config, pkgs, lib, arcade-grub-theme, agenix, home-manager, ... }:
       # open ports > 65000 for other services / netcat etc.
       { from=65000; to = 65535; }
     ];
+    interfaces."podman+".allowedUDPPorts = [53 5353];
   };
 
   # Set your time zone.
@@ -162,7 +163,7 @@ args@{ config, pkgs, lib, arcade-grub-theme, agenix, home-manager, ... }:
     rofi
     pcmanfm
     brightnessctl
-    docker-compose
+    podman-compose
     blueman
     bluez
     pass
@@ -206,11 +207,10 @@ args@{ config, pkgs, lib, arcade-grub-theme, agenix, home-manager, ... }:
     gnumake
     leiningen
     clojure
+    slirp4netns
   ];
 
   environment.pathsToLink = [ "/libexec" ];
-
-  virtualisation.docker.storageDriver = "btrfs";
 
   hardware = {
     bluetooth = {
@@ -319,13 +319,6 @@ args@{ config, pkgs, lib, arcade-grub-theme, agenix, home-manager, ... }:
   services.blueman.enable = true;
   services.passSecretService.enable = true;
 
-  services.fprintd = {
-    enable = true;
-    package = pkgs.fprintd-tod;
-    tod.enable = true;
-    tod.driver = pkgs.libfprint-2-tod1-vfs0090;
-  };
-
   services.openssh = {
     enable = true;
     # require public key authentication for better security
@@ -336,12 +329,8 @@ args@{ config, pkgs, lib, arcade-grub-theme, agenix, home-manager, ... }:
 
   services.resolved.enable = true;
 
-  virtualisation.docker.rootless = {
+  virtualisation.podman = {
     enable = true;
-    setSocketVariable = true;
-    daemon.settings = {
-      storage-driver = "btrfs";
-      dns = ["1.1.1.1" "8.8.8.8"];
-    };
+    dockerCompat = true;
   };
 }
