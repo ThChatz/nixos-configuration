@@ -7,10 +7,13 @@ let
     public-keys.tchz-t480.users.tchz
     public-keys.tchz-vospro5402.system
     public-keys.tchz-vospro5402.users.tchz
+    public-keys.tchz-macpro-51.system
+    public-keys.tchz-macpro-51.users.tchz
   ];
 in
 {
   "tchz-password-hash.age".publicKeys = everyone;
   "gt-vpn-config.age".publicKeys = everyone;
+  "git-secret-config.age".publicKeys = everyone;
 }
 # `agenix -r` to rekey :)

@@ -1,4 +1,4 @@
-{...} : {
+{lib, config,...} : {
   xresources.properties = {
     "URxvt.font" = "xft:RobotoMono Nerd Font Mono:style=Regular:size=8";
     "URxvt*utf8" = "1";
@@ -50,4 +50,13 @@
     enableBashIntegration = true;
     useTheme = "craver";
   };
+
+  
+  
+  programs.git = {
+      enable = true;
+      includes = [{path = "secret-conf";}];
+  };
+
+  programs.git-credential-oauth.enable = true;
 }

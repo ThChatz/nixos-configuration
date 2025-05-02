@@ -12,7 +12,18 @@
   home.username = "tchz";
   home.homeDirectory = "/home/tchz";
 
-  
+  age = {
+    # identityPaths = [ "/home/tchz/.ssh/id_ed25519" ];
+    # secretsDir = "/home/tchz/.local/share/agenix/agenix";
+    # secretsMountPoint = "/home/tchz/.local/share/agenix/mount";
+    secrets = {
+      "git-secret-config" =
+        {
+          file = ../../common/agenix/git-secret-config.age;
+          path = "$HOME/.config/git/secret-conf";
+        };
+    };
+  };
 
   # This value determines the Home Manager release that your configuration is
   # compatible with. This helps avoid breakage when a new Home Manager release

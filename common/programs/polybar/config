@@ -45,7 +45,7 @@ module-margin-right = 2
 
 font-0 = "Arimo:pixelsize=12;1"
 font-2 = "Wuncon Siji:style=Regular:pixelsize=12"
-font-1 = "Unifont:Sans-Serif=20;0"
+font-1 = "Unifont:style=Sans-Serif=20;0"
 
 
 modules-left = i3 mpd

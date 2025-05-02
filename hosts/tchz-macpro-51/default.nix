@@ -9,8 +9,19 @@
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
     ];
-    
-    age.identityPaths = lib.mkAfter [ "/ssh/id_rsa" ];
-    system.stateVersion = "24.05"; # Did you read the comment?
+  
+
+  hardware.graphics.extraPackages = with pkgs; [
+    amdvlk
+    # For 32 bit applications 
+    driversi686Linux.amdvlk
+  ];
+
+  environment.systemPackages = lib.mkAfter (with pkgs; [
+    vulkan-tools
+  ]);
+  
+  age.identityPaths = lib.mkAfter [ "/ssh/id_rsa" ];
+  system.stateVersion = "24.05"; # Did you read the comment?
 }
 

@@ -70,6 +70,7 @@
                      { nixpkgs.overlays = [
                          inputs.emacs-org-config._overlays."x86_64-linux".default
                        ]; }
+                     agenix.homeManagerModules.default
                      ./users/${name}/home.nix
                    ];
                    # Optionally use extraSpecialArgs

@@ -19,8 +19,10 @@ args@{ config, pkgs, lib, arcade-grub-theme, agenix, home-manager, ... }:
       trusted-public-keys = lib.mkAfter ["nixpkgs.cachix.org-1:q91R6hxbwFvDqTSDKwDAV4T5PxqXGxswD8vhONFMeOE="];
     };
   };
-  # Bootloader.
 
+  boot.supportedFilesystems = ["ntfs"];
+
+  # Bootloader.
   boot = {
     consoleLogLevel = 0;
     initrd.verbose = false;
@@ -123,8 +125,8 @@ args@{ config, pkgs, lib, arcade-grub-theme, agenix, home-manager, ... }:
   google-fonts
   symbola
   ] ++
-  builtins.filter
-    lib.attrsets.isDerivation (builtins.attrValues pkgs.nerd-fonts);
+  # all nerd fonts
+  builtins.filter lib.attrsets.isDerivation (builtins.attrValues pkgs.nerd-fonts);
 
 
   # load system wide secrets
@@ -153,7 +155,7 @@ args@{ config, pkgs, lib, arcade-grub-theme, agenix, home-manager, ... }:
     #  wget
     home-manager.packages."${system}".default
     agenix.packages."${system}".default
-    emacs29
+    emacs
     podman-compose
     bluez
     pass

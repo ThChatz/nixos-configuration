@@ -13,4 +13,10 @@
     system = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHm1budXz+iddOUnirLhqxseilolnTsoIVRm5J3SoifE";
     users.tchz = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFkPtWgnA6ZAMZjd5XtmL+45BJD/xmuHZDW7wNhkL599 tchz@tchz-vostro5402";
   };
+
+  tchz-macpro-51 = {
+    system = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJVdSr39ZC9la8U+rurC2aKVAMI8PnXNWE8Hr3vkpB9b root@tchz-macpro-51";
+    users.tchz = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPLR+wblFxPouc/+gkHdWE5SYCKtX/d5A+0uFgLEX74/ tchz@tchz-macpro-51
+";
+  };
 }
