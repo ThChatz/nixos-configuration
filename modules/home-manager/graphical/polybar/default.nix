@@ -1,6 +1,6 @@
-args@{pkgs, lib, ...} : {
+args@{pkgs, lib, config, ...} : {
   services.polybar = {
-    enable = true;
+    enable = config.tchz.home.graphical.enable;
     config = ./config;
     script = "polybar bar1 &";
     package = pkgs.polybarFull;

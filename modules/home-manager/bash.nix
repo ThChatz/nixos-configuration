@@ -1,5 +1,5 @@
 {pkgs, lib, ...}: {
-  programs.bash = {
+programs.bash = {
     enable = true;
     enableCompletion = true;
     initExtra = ''
@@ -14,5 +14,11 @@
       source "${pkgs.blesh}/share/blesh/ble.sh"
       complete -r
     '';
+  };
+
+  programs.oh-my-posh = {
+    enable = true;
+    enableBashIntegration = true;
+    useTheme = "craver";
   };
 }

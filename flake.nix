@@ -70,6 +70,8 @@
                      { nixpkgs.overlays = [
                          inputs.emacs-org-config._overlays."x86_64-linux".default
                        ]; }
+                     self.homeModule
+                     {programs.home-manager.enable = true;}
                      agenix.homeManagerModules.default
                      ./users/${name}/home.nix
                    ];
@@ -79,5 +81,7 @@
               })
             (nixpkgs.lib.attrsets.attrNames (builtins.readDir ./users))
         );
+
+      homeModule = (import ./modules/home-manager);
     };
 }
