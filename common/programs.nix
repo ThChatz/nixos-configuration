@@ -7,7 +7,6 @@ let
     dmenu
     rofi
     teams-for-linux
-    skypeforlinux
     slack
     pcmanfm
     brightnessctl
