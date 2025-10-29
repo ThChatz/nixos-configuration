@@ -23,5 +23,34 @@
 
   age.identityPaths = lib.mkAfter [ "/ssh/id_ed25519" ];
   
+  # graphics
+  hardware.nvidia = {
+    modesetting.enable = true;
+    open = false;
+    prime = {
+      intelBusId = "PCI:0:2:0";
+      nvidiaBusId = "PCI:44:0:0";
+      offload = {
+        enable = true;
+        enableOffloadCmd = true;
+      };
+    };
+  };
+
+  services.xserver.videoDrivers = [
+    "modesetting"  # example for Intel iGPU; use "amdgpu" here instead if your iGPU is AMD
+    "nvidia"
+  ];
+
   system.stateVersion = "24.05"; # Did you read the comment?
+
+  services.tlp = {
+    enable = true;
+    settings = {
+      "TLP_ENABLE" = 1;
+       "PLATFORM_PROFILE_ON_AC" = "performance";
+       "PLATFORM_PROFILE_ON_BAT" = "low-power";
+    };
+  };
+
 }
