@@ -6,17 +6,18 @@ BOOT_ARGS=--flake . --profile-name $$(git branch --show-current)
 # and host-specific files will probably not change too often
 SOURCES=$(shell git ls-tree -r --name-only HEAD | grep -e ".nix" -e ".age")
 
-test boot: $(SOURCES)
+test boot: $(SOURCES) flake.lock
 	nixos-rebuild $@ $(BOOT_ARGS) && touch $@
 
 switch: test boot
 
-update: flake.lock
+update:
+	nix flake update
 
 hm-switch:
 	home-manager switch --flake .
 
 
-.PHONY: flake.lock all
-flake.lock:
-	nix flake update
+.PHONY: update all
+
+
