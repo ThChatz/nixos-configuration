@@ -9,6 +9,8 @@ let
     public-keys.tchz-vospro5402.users.tchz
     public-keys.tchz-macpro-51.system
     public-keys.tchz-macpro-51.users.tchz
+    public-keys.tchz-pi-3p.system
+    public-keys.tchz-pi-3p.users.tchz
   ];
 in
 {

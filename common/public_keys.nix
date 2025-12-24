@@ -19,4 +19,9 @@
     users.tchz = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPLR+wblFxPouc/+gkHdWE5SYCKtX/d5A+0uFgLEX74/ tchz@tchz-macpro-51
 ";
   };
+
+  tchz-pi-3p = {
+    system = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIfk0QKf2dQnfCIcVTNry+BKsxIs9OlKjXBnE1An1yD2";
+    users.tchz = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBAB1RD3vLXr4Lus+FyFaQMIctHbdNw85KSqzHUAE3VZ";
+  };
 }
