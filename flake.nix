@@ -51,6 +51,22 @@
                };
               })
             (lib.attrsets.attrNames (builtins.readDir ./hosts))
+        ) ++
+        # special hosts are hosts where we don't use the ./common module
+      builtins.listToAttrs (
+          map
+            (name:
+              {name = name;
+               value = lib.nixosSystem {
+                 modules = [
+                   {_module.args = inputs;
+                    networking.hostName = lib.mkForce "${name}";}
+                   ./hosts/${name}
+                   agenix.nixosModules.default
+                 ];
+               };
+              })
+            (lib.attrsets.attrNames (builtins.readDir ./special-hosts))
         );
 
       # generate home configuration from directories in ./
