@@ -2,13 +2,13 @@
 # your system. Help is available in the configuration.nix(5) man page, on
 # https://search.nixos.org/options and in the NixOS manual (`nixos-help`).
 
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, ... }@args:
 
 {
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
-      ../common/programs.nix
+      ../../common/programs.nix
     ];
 
   # nix configuration
@@ -92,7 +92,7 @@
 
   users = {
     # Define a user account.
-    users.tchz = (import ../users/tchz/user.nix) args;
+    users.tchz = (import ../../users/tchz/user.nix) args;
     mutableUsers = false;
   };
 

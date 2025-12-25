@@ -51,7 +51,7 @@
                };
               })
             (lib.attrsets.attrNames (builtins.readDir ./hosts))
-        ) ++
+        ) //
         # special hosts are hosts where we don't use the ./common module
       builtins.listToAttrs (
           map
@@ -61,7 +61,7 @@
                  modules = [
                    {_module.args = inputs;
                     networking.hostName = lib.mkForce "${name}";}
-                   ./hosts/${name}
+                   ./special-hosts/${name}
                    agenix.nixosModules.default
                  ];
                };
