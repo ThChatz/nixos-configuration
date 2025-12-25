@@ -6,8 +6,6 @@ let
       { nativeMessagingHosts = [ passff-host ]; })
     dmenu
     rofi
-    teams-for-linux
-    skypeforlinux
     slack
     pcmanfm
     brightnessctl
