@@ -27,9 +27,16 @@
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.flake-utils.inputs.system.follows = "systems";
     };
+
+    # nixpkgs-2505.url = "github:NixOS/nixpkgs/nixos-25.05?rev=a6c3a6141ec1b367c58ead3f7f846c772a25f4e5";
+
+    raspberry-pi-nix = {
+      url = "github:nix-community/raspberry-pi-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { self, nixpkgs, agenix, home-manager, ... }@inputs:
+  outputs = { self, nixpkgs, agenix, raspberry-pi-nix, home-manager, ... }@inputs:
     let
       lib = nixpkgs.lib;
     in
@@ -42,7 +49,7 @@
               {name = name;
                value = lib.nixosSystem {
                  modules = [
-                   {_module.args = inputs;
+                   {_module.args = inputs // {inherit nixpkgs;};
                     networking.hostName = lib.mkForce "${name}";}
                    ./hosts/${name}
                    ./common
@@ -53,7 +60,7 @@
             (lib.attrsets.attrNames (builtins.readDir ./hosts))
         ) //
         # special hosts are hosts where we don't use the ./common module
-      builtins.listToAttrs (
+        builtins.listToAttrs (
           map
             (name:
               {name = name;
@@ -61,6 +68,8 @@
                  modules = [
                    {_module.args = inputs;
                     networking.hostName = lib.mkForce "${name}";}
+                   #raspberry-pi-nix.nixosModules.raspberry-pi
+                   #raspberry-pi-nix.nixosModules.sd-image
                    ./special-hosts/${name}
                    agenix.nixosModules.default
                  ];
@@ -99,5 +108,6 @@
         );
 
       homeModule = (import ./modules/home-manager);
+      images.tchz-pi-3p = self.nixosConfigurations.tchz-pi-3p.config.system.build.sdImage;
     };
 }

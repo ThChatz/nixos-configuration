@@ -2,14 +2,18 @@
 # your system. Help is available in the configuration.nix(5) man page, on
 # https://search.nixos.org/options and in the NixOS manual (`nixos-help`).
 
-{ config, lib, pkgs, ... }@args:
-
+{ home-manager, agenix, raspberry-pi-nix, config, lib, pkgs, modulesPath, nixpkgs, ... }@args:
+let
+  crossPkgs = import nixpkgs { localSystem = pkgs.stdenv.hostPlatform; crossSystem = "aarch64-linux"; };
+in
 {
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
-      ../../common/programs.nix
+      "${modulesPath}/installer/sd-card/sd-image-aarch64.nix"
     ];
+
+  sdImage.compressImage = false;
 
   # nix configuration
   nix = {
@@ -21,10 +25,15 @@
       trusted-users = [
         "@wheel"
       ];
-      substituters = lib.mkAfter ["https://nixpkgs.cachix.org"];
-      trusted-public-keys = lib.mkAfter ["nixpkgs.cachix.org-1:q91R6hxbwFvDqTSDKwDAV4T5PxqXGxswD8vhONFMeOE="];
+      substituters = lib.mkAfter ["https://nix-community.cachix.org"
+                                  "https://raspberry-pi-nix.cachix.org"];
+      trusted-public-keys = lib.mkAfter ["nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+                                         "raspberry-pi-nix.cachix.org-1:WmV2rdSangxW0rZjY/tBvBDSaNFQ3DyEQsVw8EvHn9o="];
     };
   };
+
+  nixpkgs.overlays = [(final : prev : prev // {ubootRaspberryPiZero = crossPkgs.ubootRaspberryPiZero;
+                                               ubootRaspberryPi = crossPkgs.ubootRaspberryPi;})];
 
   # Enable networking
   networking.networkmanager.enable = true;
@@ -32,11 +41,27 @@
     pkgs.networkmanager-openvpn
   ];
 
-
-  # Use the extlinux boot loader. (NixOS wants to enable GRUB by default)
-  boot.loader.grub.enable = false;
-  # Enables the generation of /boot/extlinux/extlinux.conf
-  boot.loader.generic-extlinux-compatible.enable = true;
+  boot = {
+    loader = {
+      # Use the extlinux boot loader. (NixOS wants to enable GRUB by default)
+      grub.enable = lib.mkForce false; 
+      systemd-boot.enable = lib.mkForce false;
+      # initScript.enable = lib.mkForce false;
+      # Enables the generation of /boot/extlinux/extlinux.conf
+      generic-extlinux-compatible = {
+        enable = true;
+        useGenerationDeviceTree = false;
+      };
+    };
+    kernelPackages = lib.mkForce pkgs.linuxKernel.packages.linux_rpi3;
+    kernelParams = [ "cma=256M" ];
+    initrd.availableKernelModules = [
+      # Allows early (earlier) modesetting for the Raspberry Pi
+      "vc4" "bcm2835_dma" "i2c_bcm2835"
+    ];
+    initrd.allowMissingModules = true;
+    # consoleLogLevel = lib.mkDefault 7;
+  };
 
   # open some ports
   networking.firewall = {
@@ -72,23 +97,21 @@
 
   # fonts
   fonts.packages = with pkgs; [
-  line-awesome
-  font-awesome
-  siji
+  # font-awesome
+  # siji
   source-code-pro
-  cm_unicode
-  liberation_ttf
-  corefonts
-  google-fonts
-  symbola
-  ] ++
-  # all nerd fonts
-  builtins.filter lib.attrsets.isDerivation (builtins.attrValues pkgs.nerd-fonts);
+  # cm_unicode
+  # liberation_ttf
+  # corefonts
+  # google-fonts
+  # symbola
+  ];
+
 
 
   # load system wide secrets
-  age.secrets.tchz-password-hash.file = ./agenix/tchz-password-hash.age;
-  age.secrets.gt-vpn-config.file = ./agenix/gt-vpn-config.age;
+  age.secrets.tchz-password-hash.file = ../../common/agenix/tchz-password-hash.age;
+  # age.secrets.gt-vpn-config.file = ./agenix/gt-vpn-config.age;
 
   users = {
     # Define a user account.
@@ -96,58 +119,45 @@
     mutableUsers = false;
   };
 
-
+  
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
   nixpkgs.config.permittedInsecurePackages = [
     "qtwebkit-5.212.0-alpha4"
   ];
-
-
+  nixpkgs.config.allowUnsupportedSystem = true;
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
     #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
     #  wget
-    home-manager.packages."${system}".default
-    agenix.packages."${system}".default
-    emacs
-    podman-compose
-    bluez
-    pass
-    gnupg
-    pinentry-all
-    texlive.combined.scheme-full
-    zip
-    unzip
-    gzip
-    python3
-    nodejs_20
-    nodePackages.prettier
-    yarn
-    wineWowPackages.stableFull
-    graphviz
-    pulsemixer
-    php
-    acpi
-    scrot
-    (google-cloud-sdk.withExtraComponents ([ google-cloud-sdk.components.kubectl ]))
-    kubectl
-    kubernetes-helm
-    pamixer
-    jq
-    xkblayout-state
-    inotify-tools
-    gnumake
-    leiningen
-    clojure
-    slirp4netns
+    # home-manager.packages."${system}".default
+    # agenix.packages."${system}".default
+    # emacs
+    # bluez
+    # pass
+    # gnupg
+    # pinentry-all
+    # zip
+    # unzip
+    # gzip
+    # pulsemixer
+    # scrot
+    # pamixer
+    # jq
+    # xkblayout-state
+    # inotify-tools
+    # gnumake
+    # slirp4netns
   ];
 
   environment.pathsToLink = [ "/libexec" ];
 
+  # nixpkgs.buildPlatform.system = "x86_64-linux"; #If you build on x86 other wise changes this.
+  # raspberry-pi-nix.board = "bcm2711";
   hardware = {
+    enableRedistributableFirmware = true;
     bluetooth = {
       enable = true;
       powerOnBoot = true;
@@ -162,35 +172,35 @@
     pulse.enable = true;
   };
 
-  services.displayManager.defaultSession = "none+i3";
+  # services.displayManager.defaultSession = "none+i3";
 
-  services.xserver = {
-  	enable = true;
+  # services.xserver = {
+  # 	enable = true;
 
-    xkb = {
-      layout = "us, gr";
-      variant = "";
-      options = "shifts_toggle";
-    };
+  #   xkb = {
+  #     layout = "us, gr";
+  #     variant = "";
+  #     options = "shifts_toggle";
+  #   };
 
-		desktopManager = {
-		  xterm.enable=false;
-		};
+	# 	desktopManager = {
+	# 	  xterm.enable=false;
+	# 	};
 
-		displayManager = {
-			lightdm.enable = true;
-		};
+	# 	displayManager = {
+	# 		lightdm.enable = true;
+	# 	};
 
-		windowManager.i3 = {
-		  enable = true;
-			extraPackages = with pkgs; [
-        eww
-				rofi
-				polybarFull
-			];
-			package = pkgs.i3-gaps;
-		};
-  };
+	# 	windowManager.i3 = {
+	# 	  enable = true;
+	# 		extraPackages = with pkgs; [
+  #       eww
+	# 			rofi
+	# 			polybarFull
+	# 		];
+	# 		package = pkgs.i3;
+	# 	};
+  # };
 
   services.avahi = {
     enable = true;
@@ -211,10 +221,10 @@
     port = 65000;
   };
 
-  services.printing = {
-    enable = true;
-    drivers = [pkgs.hplipWithPlugin];
-  };
+  # services.printing = {
+  #   enable = true;
+  #   drivers = [pkgs.hplipWithPlugin];
+  # };
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
@@ -224,35 +234,33 @@
       package = pkgs.gitFull;
     };
 
-    gnupg.agent = {
-      enable = true;
-      enableSSHSupport = true;
-      pinentryPackage = pkgs.pinentry-gtk2;
-      settings = {
-        enable-ssh-support = " ";
-        no-allow-external-cache = " ";
-      };
-    };
-    openvpn3.enable = true;
-    direnv.enable = true;
-    steam.enable = true;        # todo: run in firejail
-    firejail.enable = true;
+    # gnupg.agent = {
+    #   enable = true;
+    #   enableSSHSupport = true;
+    #   pinentryPackage = pkgs.pinentry-gtk2;
+    #   settings = {
+    #     enable-ssh-support = " ";
+    #     no-allow-external-cache = " ";
+    #   };
+    # };
+    # openvpn3.enable = true;
+    # direnv.enable = true;
   };
   # programs.mtr.enable = true;
 
   # List services that you want to enable:
 
-  services.pcscd.enable = true;
+  # services.pcscd.enable = true;
 
   # Enable the OpenSSH daemon.
   # services.openssh.enable = true;
 
   # for PCManFM mounting
-  services.gvfs.enable = true;
-  services.udisks2.enable = true;
-  services.devmon.enable = true;
-  services.blueman.enable = true;
-  services.passSecretService.enable = true;
+  # services.gvfs.enable = true;
+  # services.udisks2.enable = true;
+  # services.devmon.enable = true;
+  # services.blueman.enable = true;
+  # services.passSecretService.enable = true;
 
   services.openssh = {
     enable = true;

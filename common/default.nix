@@ -21,7 +21,7 @@ args@{ config, pkgs, lib, arcade-grub-theme, agenix, home-manager, ... }:
   };
 
   boot.supportedFilesystems = ["ntfs"];
-
+  boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
   # Bootloader.
   boot = {
     consoleLogLevel = 0;
@@ -231,7 +231,7 @@ args@{ config, pkgs, lib, arcade-grub-theme, agenix, home-manager, ... }:
 				rofi
 				polybarFull
 			];
-			package = pkgs.i3-gaps;
+			package = pkgs.i3;
 		};
   };
 
