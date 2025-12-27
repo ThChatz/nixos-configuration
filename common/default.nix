@@ -231,7 +231,6 @@ args@{ config, pkgs, lib, arcade-grub-theme, agenix, home-manager, ... }:
 				rofi
 				polybarFull
 			];
-			package = pkgs.i3-gaps;
 		};
   };
 
