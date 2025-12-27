@@ -21,7 +21,7 @@ args@{ config, pkgs, lib, arcade-grub-theme, agenix, home-manager, ... }:
   };
 
   boot.supportedFilesystems = ["ntfs"];
-
+  boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
   # Bootloader.
   boot = {
     consoleLogLevel = 0;
