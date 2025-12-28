@@ -27,16 +27,9 @@
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.flake-utils.inputs.system.follows = "systems";
     };
-
-    # nixpkgs-2505.url = "github:NixOS/nixpkgs/nixos-25.05?rev=a6c3a6141ec1b367c58ead3f7f846c772a25f4e5";
-
-    raspberry-pi-nix = {
-      url = "github:nix-community/raspberry-pi-nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
   };
 
-  outputs = { self, nixpkgs, agenix, raspberry-pi-nix, home-manager, ... }@inputs:
+  outputs = { self, nixpkgs, agenix, home-manager, ... }@inputs:
     let
       lib = nixpkgs.lib;
     in
@@ -48,12 +41,14 @@
             (name:
               {name = name;
                value = lib.nixosSystem {
+                 specialArgs = inputs;
                  modules = [
-                   {_module.args = inputs // {inherit nixpkgs;};
+                   {#_module.args = inputs // {inherit nixpkgs;};
                     networking.hostName = lib.mkForce "${name}";}
-                   ./hosts/${name}
                    ./common
+                   self.systemModule
                    agenix.nixosModules.default
+                   ./hosts/${name}
                  ];
                };
               })
@@ -70,8 +65,9 @@
                     networking.hostName = lib.mkForce "${name}";}
                    #raspberry-pi-nix.nixosModules.raspberry-pi
                    #raspberry-pi-nix.nixosModules.sd-image
-                   ./special-hosts/${name}
                    agenix.nixosModules.default
+                   self.systemModule
+                   ./special-hosts/${name}
                  ];
                };
               })
@@ -91,7 +87,6 @@
                  home-manager.lib.homeManagerConfiguration {
                    inherit pkgs;
                    modules = [
-                     { _module.args = inputs; }
                      { nixpkgs.overlays = [
                          inputs.emacs-org-config._overlays."x86_64-linux".default
                        ]; }
@@ -108,6 +103,7 @@
         );
 
       homeModule = (import ./modules/home-manager);
+      systemModule = (import ./modules/system);
       images.tchz-pi-3p = self.nixosConfigurations.tchz-pi-3p.config.system.build.sdImage;
     };
 }

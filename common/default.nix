@@ -207,32 +207,7 @@ args@{ config, pkgs, lib, arcade-grub-theme, agenix, home-manager, ... }:
 
   services.displayManager.defaultSession = "none+i3";
 
-  services.xserver = {
-  	enable = true;
-
-    xkb = {
-      layout = "us, gr";
-      variant = "";
-      options = "shifts_toggle";
-    };
-
-		desktopManager = {
-		  xterm.enable=false;
-		};
-
-		displayManager = {
-			lightdm.enable = true;
-		};
-
-		windowManager.i3 = {
-		  enable = true;
-			extraPackages = with pkgs; [
-        eww
-				rofi
-				polybarFull
-			];
-		};
-  };
+  services.xserver.enable = true;
 
   services.avahi = {
     enable = true;

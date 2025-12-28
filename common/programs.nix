@@ -22,6 +22,7 @@ let
     prismlauncher
     eww
     blueman
+    deskflow
   ];
 in
 {

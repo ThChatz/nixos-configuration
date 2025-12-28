@@ -24,6 +24,7 @@ args@{ config, pkgs, lib, arcade-grub-theme, ... }:
         };
       };
     };
+    age.identityPaths = lib.mkAfter ["/ssh/ssh_host_ed25519_key"];
 
     # networking.hostName = lib.mkForce "tchz-yoga260"; # Define your hostname.
     # This value determines the NixOS release from which the default

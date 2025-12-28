@@ -2,9 +2,9 @@
 # your system. Help is available in the configuration.nix(5) man page, on
 # https://search.nixos.org/options and in the NixOS manual (`nixos-help`).
 
-{ home-manager, agenix, raspberry-pi-nix, config, lib, pkgs, modulesPath, nixpkgs, ... }@args:
+{ home-manager, agenix, config, lib, pkgs, modulesPath, nixpkgs, ... }@args:
 let
-  crossPkgs = import nixpkgs { localSystem = pkgs.stdenv.hostPlatform; crossSystem = "aarch64-linux"; };
+  system = "aarch64-linux";
 in
 {
   imports =
@@ -25,15 +25,10 @@ in
       trusted-users = [
         "@wheel"
       ];
-      substituters = lib.mkAfter ["https://nix-community.cachix.org"
-                                  "https://raspberry-pi-nix.cachix.org"];
-      trusted-public-keys = lib.mkAfter ["nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
-                                         "raspberry-pi-nix.cachix.org-1:WmV2rdSangxW0rZjY/tBvBDSaNFQ3DyEQsVw8EvHn9o="];
+      substituters = lib.mkAfter ["https://nix-community.cachix.org"];
+      trusted-public-keys = lib.mkAfter ["nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="];
     };
   };
-
-  nixpkgs.overlays = [(final : prev : prev // {ubootRaspberryPiZero = crossPkgs.ubootRaspberryPiZero;
-                                               ubootRaspberryPi = crossPkgs.ubootRaspberryPi;})];
 
   # Enable networking
   networking.networkmanager.enable = true;
@@ -132,30 +127,29 @@ in
   environment.systemPackages = with pkgs; [
     #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
     #  wget
-    # home-manager.packages."${system}".default
-    # agenix.packages."${system}".default
-    # emacs
-    # bluez
-    # pass
-    # gnupg
-    # pinentry-all
-    # zip
-    # unzip
-    # gzip
-    # pulsemixer
-    # scrot
-    # pamixer
-    # jq
-    # xkblayout-state
-    # inotify-tools
-    # gnumake
-    # slirp4netns
+    home-manager.packages."${system}".default
+    agenix.packages."${system}".default
+    emacs
+    bluez
+    pass
+    gnupg
+    pinentry-all
+    zip
+    unzip
+    gzip
+    pulsemixer
+    scrot
+    pamixer
+    jq
+    xkblayout-state
+    inotify-tools
+    gnumake
+    slirp4netns
+    deskflow
   ];
 
   environment.pathsToLink = [ "/libexec" ];
 
-  # nixpkgs.buildPlatform.system = "x86_64-linux"; #If you build on x86 other wise changes this.
-  # raspberry-pi-nix.board = "bcm2711";
   hardware = {
     enableRedistributableFirmware = true;
     bluetooth = {
@@ -174,33 +168,7 @@ in
 
   # services.displayManager.defaultSession = "none+i3";
 
-  # services.xserver = {
-  # 	enable = true;
-
-  #   xkb = {
-  #     layout = "us, gr";
-  #     variant = "";
-  #     options = "shifts_toggle";
-  #   };
-
-	# 	desktopManager = {
-	# 	  xterm.enable=false;
-	# 	};
-
-	# 	displayManager = {
-	# 		lightdm.enable = true;
-	# 	};
-
-	# 	windowManager.i3 = {
-	# 	  enable = true;
-	# 		extraPackages = with pkgs; [
-  #       eww
-	# 			rofi
-	# 			polybarFull
-	# 		];
-	# 		package = pkgs.i3;
-	# 	};
-  # };
+  services.xserver.enable = true;
 
   services.avahi = {
     enable = true;

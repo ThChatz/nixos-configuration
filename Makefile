@@ -19,7 +19,7 @@ update:
 hm-switch:
 	home-manager switch --flake .
 
+tchz-pi-3p-sd-image: $(SOURCES) flake.lock
+	nix build .#images.tchz-pi-3p --option system aarch64-linux --option sandbox false
 
-.PHONY: update all
-
-
+.PHONY: update tchz-pi-3p-sd-image
