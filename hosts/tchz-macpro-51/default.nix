@@ -8,15 +8,11 @@
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
+      ./autorandr.nix
+      ../../modules/nixos/nvidia.nix
+      ../../modules/nixos/openrgb.nix
     ];
   
-
-  hardware.graphics.extraPackages = with pkgs; [
-    amdvlk
-    # For 32 bit applications 
-    driversi686Linux.amdvlk
-  ];
-
   environment.systemPackages = lib.mkAfter (with pkgs; [
     vulkan-tools
   ]);
