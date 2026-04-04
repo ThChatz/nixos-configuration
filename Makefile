@@ -8,7 +8,7 @@ SOURCES=$(shell git ls-tree -r --name-only HEAD | grep -e ".nix" -e ".age")
 
 test boot: $(SOURCES) flake.lock
 # make sure i can login
-	cd common/agenix && agenix -d tchz-password-hash.age > /dev/null
+	cd common/agenix && sudo -u tchz agenix -d tchz-password-hash.age > /dev/null
 	nixos-rebuild $@ $(BOOT_ARGS) && touch $@
 
 switch: test boot
