@@ -9,8 +9,8 @@
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
       ./autorandr.nix
-      ../nvidia.nix
-      ../openrgb.nix
+      ./nvidia.nix
+      ./openrgb.nix
     ];
   
   environment.systemPackages = lib.mkAfter (with pkgs; [

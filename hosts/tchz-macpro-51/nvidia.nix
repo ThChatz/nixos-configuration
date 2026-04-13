@@ -7,6 +7,9 @@
 
   # Load nvidia driver for Xorg and Wayland
   services.xserver.videoDrivers = ["nvidia"];
+  boot.initrd.kernelModules = ["nvidia"];
+  boot.extraModulePackages = [ config.boot.kernelPackages.nvidia_x11 ];
+  boot.kernelParams = lib.mkAfter ["nvidia-drm.modeset=1" "module_blacklist=i915" "nvidia_drm.fbdev=0"];
 
   hardware.nvidia = {
 

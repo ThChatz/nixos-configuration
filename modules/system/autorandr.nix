@@ -1,16 +1,22 @@
 {config, pkgs, lib, ...} :
 let
-  cfg = config.programs.autorandr;
-  
+  cfg = config.services.autorandr;
+  dm_cfg = config.services.xserver.displayManager;
 in
 {
-  options.services.autorandr = {
-    enable = lib.mkEnableOption "enable autorandr on this system";
-  };
-
   config = lib.mkIf cfg.enable {
+    # add autorandr executable to path
     environment.systemPackages = lib.mkAfter [
-      pkgs.deskflow
+      pkgs.xrandr
+      pkgs.autorandr
     ];
+
+    services.xserver.displayManager.setupCommands =
+      lib.mkAfter ''${pkgs.autorandr}/bin/autorandr --change > /tmp/autorandr.log &> /tmp/autorandr.error.log'';
+
+    # some defaults
+    services.autorandr = {
+      defaultTarget = "common";
+    };
   };
 }

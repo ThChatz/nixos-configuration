@@ -1,12 +1,7 @@
 {pkgs, lib,...} : {
+  imports = [../../modules/system/autorandr.nix];
+
   services.autorandr.enable = true;
-
-  # add autrandr executable to path
-  environment.systemPackages = lib.mkAfter (with pkgs; [
-    autorandr
-  ]);
-
-  
 
   # profiles
   services.autorandr.profiles = {

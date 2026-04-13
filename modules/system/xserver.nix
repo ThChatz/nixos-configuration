@@ -13,8 +13,8 @@ lib.mkIf config.services.xserver.enable
 		    xterm.enable= lib.mkDefault false;
 		  };
 
-		  displayManager = {
-			  lightdm.enable = lib.mkDefault true;
+		  displayManager.lightdm = {
+			  enable = lib.mkDefault true;
 		  };
 
 		  windowManager.i3 = {
@@ -26,4 +26,5 @@ lib.mkIf config.services.xserver.enable
 			  ];
 		  };
     };
+    
   }

@@ -3,6 +3,9 @@
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
 args@{ config, pkgs, lib, arcade-grub-theme, agenix, home-manager, ... }:
+let
+  system = pkgs.stdenv.hostPlatform.system;
+in
 {
   imports = [ ./programs.nix ];
 
@@ -32,14 +35,15 @@ args@{ config, pkgs, lib, arcade-grub-theme, agenix, home-manager, ... }:
       acpi_call
     ];
 
-    initrd.kernelModules = [ "i915" "acpi_call" ];
+    initrd.kernelModules = [ # "i915"
+                             "acpi_call" ];
     kernelParams = [
       "quiet"
       "splash"
       "bgrt_disable"
       "boot.shell_on_fail"
-      "i915.modeset=1"
-      "i915.fastboot=1"
+      # "i915.modeset=1"
+      # "i915.fastboot=1"
       "loglevel=3"
       "rd.systemd.show_status=false"
       "rd.udev.log_level=3"
@@ -59,9 +63,9 @@ args@{ config, pkgs, lib, arcade-grub-theme, agenix, home-manager, ... }:
         efiSupport = true;
         enable = true;
         device = "nodev";
-        splashImage = arcade-grub-theme.defaultPackage.${pkgs.system}.outPath + "/splash.png";
+        splashImage = arcade-grub-theme.defaultPackage.${system}.outPath + "/splash.png";
         gfxmodeEfi = "1920x1080";
-        theme = arcade-grub-theme.defaultPackage.${pkgs.system}.outPath;
+        theme = arcade-grub-theme.defaultPackage.${system}.outPath;
       };
     };
   };
@@ -167,9 +171,7 @@ args@{ config, pkgs, lib, arcade-grub-theme, agenix, home-manager, ... }:
     gzip
     python3
     nodejs_20
-    nodePackages.prettier
     yarn
-    wineWowPackages.stableFull
     graphviz
     pulsemixer
     php
